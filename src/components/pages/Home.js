@@ -30,17 +30,26 @@ const Home = () => {
                     <tr>
                       <th>No</th>
                       <th>Judul</th>
-                      <th>Tnggal</th>
                       <th>Kategori</th>
+                      <th>Tnggal</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>1</td>
-                      <td>Java Coding Tips For Beginners</td>
-                      <td>Dec 8, 2021 </td>
-                      <td>Educational</td>
+                      <td>Judul 1</td>
+                      <td>Kategori 1</td>
+                      <td>Tanggal 1</td>
+                      <td>
+                        <a href="/EditBlog">
+                          <i className="fas fa-edit me-2"></i>
+                        </a>
+                        <i
+                          className="fa fa-trash text-danger"
+                          aria-hidden="true"
+                        ></i>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

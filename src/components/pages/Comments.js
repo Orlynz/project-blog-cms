@@ -18,7 +18,7 @@ const Comments = () => {
       <div className="konten-bungkus">
         <NavBar />
         {/* Page Konten */}
-        <div className="container">
+        <div className="container-fluid">
           <div className="row">
             <div className="col">
               <div className="card">

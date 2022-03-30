@@ -4,9 +4,12 @@
   "private": true,
   "dependencies": {
     "@babel/helper-skip-transparent-expression-wrappers": "^7.16.0",
+    "@ckeditor/ckeditor5-build-classic": "^33.0.0",
+    "@ckeditor/ckeditor5-react": "^4.0.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
     "datatables.net": "^1.11.5",
     "datatables.net-dt": "^1.11.5",

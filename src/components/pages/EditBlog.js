@@ -27,7 +27,28 @@ class AddBlog extends Component {
           <div className="container-fluid">
             <Card className="shadow">
               <div className="card-header">
-                <h4>Add Blog</h4>
+                <h4
+                  style={{
+                    float: "left",
+                  }}
+                >
+                  Edit Blog
+                </h4>
+                <Button
+                  variant="outline-dark"
+                  style={{
+                    float: "right",
+                  }}
+                  type="submit"
+                >
+                  <strong>
+                    <i
+                      className="fa fa-trash text-danger me-2"
+                      aria-hidden="true"
+                    ></i>
+                    DELETE
+                  </strong>
+                </Button>
               </div>
 
               <Form
@@ -68,7 +89,7 @@ class AddBlog extends Component {
                     </Form.Select>
                   </Col>
                 </Form.Group>
-                <Form.Group
+                {/* <Form.Group
                   as={Row}
                   className="mb-3"
                   controlId="formPlaintextPassword"
@@ -79,7 +100,7 @@ class AddBlog extends Component {
                   <Col sm="10">
                     <Form.Control type="file" required />
                   </Col>
-                </Form.Group>
+                </Form.Group> */}
                 <Form.Group
                   as={Row}
                   className="mb-3"

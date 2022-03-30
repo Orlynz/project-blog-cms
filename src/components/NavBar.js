@@ -38,16 +38,6 @@ const NavBar = () => {
                     Profile
                   </a>
                 </li>
-                <li>
-                  <a className="dropdown-item" href="/Setting">
-                    Settings
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="/Logout">
-                    Logout
-                  </a>
-                </li>
               </ul>
             </li>
           </ul>
