@@ -5,7 +5,7 @@ const NavBar = () => {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
         <div className="d-flex align-items-center">
-          <i class="fas fa-align-left jingga fs-4 me-3" id="sidebarToggle"></i>
+          <i class="fas fa-align-left fs-4 me-3" id="sidebarToggle"></i>
         </div>
         <button
           className="navbar-toggler"
@@ -20,25 +20,11 @@ const NavBar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle fw-bold"
-                href="/#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+            <li className="nav-item">
+              <a className="nav-link fw-bold text-black" href="/Profile">
                 <i className="fas fa-user me-2"></i>
                 Orlynz Sambora
               </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a className="dropdown-item" href="/Profile">
-                    Profile
-                  </a>
-                </li>
-              </ul>
             </li>
           </ul>
         </div>

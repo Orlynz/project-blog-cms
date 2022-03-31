@@ -21,7 +21,9 @@ const AddCategories = () => {
         <div className="container-fluid">
           <Card className="shadow">
             <div className="card-header">
-              <h4>Add Categories</h4>
+              <h4>
+                <i className="fas fa-plus-circle me-2"></i>Add Categories
+              </h4>
             </div>
 
             <Form

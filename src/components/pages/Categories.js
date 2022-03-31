@@ -22,35 +22,37 @@ const Categories = () => {
           <div className="row">
             <div className="col">
               <div className="card">
-                <div className="card-header text-center">
-                  <h4
-                    style={{
-                      float: "left",
-                    }}
-                  >
-                    All Categories
-                  </h4>
-                  <Button
-                    href="/AddCategories"
-                    variant="outline-dark"
-                    style={{
-                      float: "right",
-                    }}
-                    type="submit"
-                  >
-                    <strong>ADD</strong>
-                  </Button>
+                <div className="card-body">
+                  <div className="card-title text-center">
+                    <h4
+                      style={{
+                        float: "left",
+                      }}
+                    >
+                      All Categories
+                    </h4>
+                    <Button
+                      href="/AddCategories"
+                      variant="outline-dark"
+                      style={{
+                        float: "right",
+                      }}
+                      type="submit"
+                    >
+                      <strong>ADD</strong>
+                    </Button>
+                  </div>
+                  <table className="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Judul</th>
+                        <th>Details</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
                 </div>
-                <table className="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Judul</th>
-                      <th>Details</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
               </div>
             </div>
           </div>

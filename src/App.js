@@ -11,6 +11,7 @@ import {
   EditBlog,
 } from "./components/pages";
 import "./assets/css/Main.css";
+import Profile from "./components/Profile.js";
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +24,7 @@ function App() {
           <Route path="/AddCategories" component={AddCategories} exact />
           <Route path="/AddBlog" component={AddBlog} exact />
           <Route path="/EditBlog" component={EditBlog} exact />
+          <Route path="/Profile" component={Profile} exact />
         </Switch>
       </main>
     </BrowserRouter>

@@ -22,37 +22,41 @@ const Home = () => {
           <div className="row g-2">
             <div className="col-md-9">
               <div className="card">
-                <div className="card-header text-center">
-                  <h4>Posts Terbaru</h4>
+                <div className="card-body">
+                  <div className="card-title text-center">
+                    <h4>Posts Terbaru</h4>
+                  </div>
+                  <div className="table-responsive">
+                    <table className="table text-center">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Judul</th>
+                          <th>Kategori</th>
+                          <th>Tnggal</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>Judul 1</td>
+                          <td>Kategori 1</td>
+                          <td>Tanggal 1</td>
+                          <td>
+                            <a href="/EditBlog">
+                              <i className="fas fa-edit me-2"></i>
+                            </a>
+                            <i
+                              className="fa fa-trash text-danger"
+                              aria-hidden="true"
+                            ></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <table className="table table-striped text-center">
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Judul</th>
-                      <th>Kategori</th>
-                      <th>Tnggal</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Judul 1</td>
-                      <td>Kategori 1</td>
-                      <td>Tanggal 1</td>
-                      <td>
-                        <a href="/EditBlog">
-                          <i className="fas fa-edit me-2"></i>
-                        </a>
-                        <i
-                          className="fa fa-trash text-danger"
-                          aria-hidden="true"
-                        ></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </div>
             <div className="col-md-3">

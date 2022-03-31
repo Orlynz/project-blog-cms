@@ -22,20 +22,24 @@ const Comments = () => {
           <div className="row">
             <div className="col">
               <div className="card">
-                <div className="card-header text-center">
-                  <h4>All Comment</h4>
+                <div className="card-body">
+                  <div className="card-title text-center">
+                    <h4>All Comment</h4>
+                  </div>
+                  <div className="table-responsive">
+                    <table className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Nama</th>
+                          <th>Comments</th>
+                          <th>Blog</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
                 </div>
-                <table className="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Nama</th>
-                      <th>Comments</th>
-                      <th>Blog</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
               </div>
             </div>
           </div>

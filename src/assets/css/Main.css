@@ -1,11 +1,11 @@
 body {
   background-image: linear-gradient(
     to right,
-    rgb(255, 200, 98),
-    rgb(255, 211, 129),
-    rgb(255, 214, 139),
-    rgb(255, 222, 161),
-    rgb(255, 223, 164)
+    orange,
+    rgb(255, 172, 19),
+    rgb(255, 177, 32),
+    rgb(255, 179, 38),
+    rgb(255, 184, 52)
   );
 }
 .jingga {
@@ -13,12 +13,27 @@ body {
 }
 
 .merah {
-  color: #dc3545;
+  color: red;
 }
 
 .list-group-item {
   border: none;
   padding: 20px 30px;
+}
+.list-group-item:hover {
+  border: none;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  padding: 20px 30px;
+  background-image: linear-gradient(
+    to left,
+    orange,
+    rgb(255, 172, 19),
+    rgb(255, 177, 32),
+    rgb(255, 179, 38),
+    rgb(255, 184, 52)
+  );
+  color: white;
 }
 
 .list-group-item.active {
@@ -74,10 +89,32 @@ body.sidebar-toggle .bungkus .sidebar {
 }
 
 .card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #d2d2dc;
+  border-radius: 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  background-color: white;
+}
+
+.card .card-title {
+  color: #000000;
+  margin-bottom: 0.625rem;
+  text-transform: capitalize;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.table-responsive {
+  display: block;
   width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 .orange {
   border-color: orange;
