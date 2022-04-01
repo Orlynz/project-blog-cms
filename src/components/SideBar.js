@@ -1,6 +1,16 @@
 import React from "react";
-
+import $ from "jquery";
 const SideBar = () => {
+  $(function () {
+    var path = window.location.href; // Mengambil data URL pada Address bar
+    $("div a").each(function () {
+      // Jika URL pada menu ini sama persis dengan path...
+      if (this.href === path) {
+        // Tambahkan kelas "active" pada menu ini
+        $(this).addClass("active");
+      }
+    });
+  });
   return (
     <div className="bg-white sidebar">
       <div className="sidebar-head text-center py-4 jingga fs-4 fw-bold text-uppercase border-bottom">
@@ -31,18 +41,18 @@ const SideBar = () => {
         >
           <i className="fas fa-comment-dots me-2"></i>Comments
         </a>
-        <a
+        {/* <a
           href="/AddBlog"
           className="list-group-item list-group-item-action jingga fw-bold"
         >
           <i className="fas fa-plus-circle me-2"></i>Add Blog
-        </a>
-        <a
+        </a> */}
+        {/* <a
           href="/AddCategories"
           className="list-group-item list-group-item-action jingga fw-bold"
         >
           <i className="fas fa-plus-circle me-2"></i>Add Categories
-        </a>
+        </a> */}
         <a
           href="/Logout"
           className="list-group-item list-group-item-action merah fw-bold"

@@ -22,9 +22,14 @@ body {
 }
 .list-group-item:hover {
   border: none;
+  padding: 20px 30px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
-  padding: 20px 30px;
+}
+
+.list-group-item.active {
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
   background-image: linear-gradient(
     to left,
     orange,
@@ -34,10 +39,6 @@ body {
     rgb(255, 184, 52)
   );
   color: white;
-}
-
-.list-group-item.active {
-  background-color: transparent;
   font-weight: bold;
   border: none;
 }
@@ -116,19 +117,9 @@ body.sidebar-toggle .bungkus .sidebar {
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
-.orange {
-  border-color: orange;
-  color: orange;
-}
 .dropdown-toggle::after {
   display: none;
 }
-/* .dropdown:hover .dropdown-menu {
-  display: block;
-}
-.dropdown-menu {
-  margin-top: 0px;
-} */
 a {
   text-decoration: none;
 }

@@ -25,34 +25,34 @@ const Profile = () => {
                   <div className="m-t-30 center text-center">
                     <img
                       src="https://images7.alphacoders.com/719/719179.png"
-                      className="rounded"
-                      width="150"
+                      className="rounded-circle"
+                      width="200"
+                      height="200"
                     />
                     <h4 className="card-title m-t-10">Orlynz Sambora</h4>
                     <h6 className="card-subtitle">Accounts Manager</h6>
                   </div>
                 </div>
-                <div>
-                  <hr />
-                </div>
                 <div className="card-body">
-                  <small className="text-muted">Email address </small>
+                  <hr />
+                  <small className="text-muted">Email ddress </small>
                   <h6>schwarz090404@gmail.com</h6>
                   <small className="text-muted p-t-30 db">Phone</small>
                   <h6>+628 9506 616 552</h6>
                   <small className="text-muted p-t-30 db">Address</small>
                   <h6>Kalikangkung Street RT 2 RW 1</h6>
-                  <small className="text-muted p-t-30 db">Social Profile</small>
-                  <br />
-                  <button className="btn btn-circle btn-secondary">
-                    <i className="fab fa-facebook-f"></i>
-                  </button>
-                  <button className="btn btn-circle btn-secondary">
-                    <i className="fab fa-twitter"></i>
-                  </button>
-                  <button className="btn btn-circle btn-secondary">
-                    <i className="fab fa-youtube"></i>
-                  </button>
+                  <hr />
+                  <div className="text-center">
+                    <a>
+                      <i className="fab fa-facebook-f fs-4 me-5"></i>
+                    </a>
+                    <a>
+                      <i className="fab fa-twitter fs-4 me-5"></i>
+                    </a>
+                    <a>
+                      <i className="fab fa-youtube fs-4"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

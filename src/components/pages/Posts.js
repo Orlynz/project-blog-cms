@@ -52,6 +52,10 @@ class App extends React.Component {
                     <strong>ADD</strong>
                   </Button>
                 </div>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
                 <div className="table-responsive">
                   <table className=" table text-center" id="example">
                     <thead>
