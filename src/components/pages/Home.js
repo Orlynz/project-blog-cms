@@ -18,13 +18,14 @@ const Home = () => {
       <div className="konten-bungkus">
         <NavBar />
         {/* Page Konten */}
-        <div className="container-fluid">
+        <div className="container-fluid pb-4">
           <div className="row g-2">
             <div className="col-md-9">
               <div className="card">
                 <div className="card-body">
                   <div className="card-title text-center">
                     <h4>Posts Terbaru</h4>
+                    <hr />
                   </div>
                   <div className="table-responsive">
                     <table className="table text-center">

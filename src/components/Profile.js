@@ -17,24 +17,27 @@ const Profile = () => {
       <SideBar />
       <div className="konten-bungkus">
         <NavBar />
-        <div className="container-fluid">
+        <div className="container-fluid pb-4">
           <div className="row">
             <div className="col-lg-4 col-xlg-3 col-md-5">
               <div className="card">
                 <div className="card-body">
                   <div className="m-t-30 center text-center">
                     <img
-                      src="https://images7.alphacoders.com/719/719179.png"
+                      src="https://i.pinimg.com/736x/3b/a2/c4/3ba2c46051c4fc2e7eb353f2eb1f08e4.jpg"
                       className="rounded-circle"
                       width="200"
                       height="200"
                     />
-                    <h4 className="card-title m-t-10">Orlynz Sambora</h4>
-                    <h6 className="card-subtitle">Accounts Manager</h6>
+                    <h2 className=" m-t-10">Orlynz Sambora</h2>
+                    <br />
+                    <h6 className="card-subtitle">
+                      <i>"bwa bwaaa bwa bwa baw waaaaaaaaaaaa"</i>
+                    </h6>
                   </div>
                 </div>
+                <hr />
                 <div className="card-body">
-                  <hr />
                   <small className="text-muted">Email ddress </small>
                   <h6>schwarz090404@gmail.com</h6>
                   <small className="text-muted p-t-30 db">Phone</small>
@@ -59,75 +62,86 @@ const Profile = () => {
             <div className="col-lg-8 col-xlg-9 col-md-7">
               <div className="card">
                 <div className="card-body">
+                  <div className="card-title text-center">
+                    <h4>Edit Profile</h4>
+                  </div>
+                </div>
+              </div>
+              <div className="card">
+                <div className="card-body">
                   <form className="form-horizontal form-material mx-2">
-                    <div className="form-group">
+                    <div className="form-group pb-2">
                       <label className="col-md-12">Full Name</label>
                       <div className="col-md-12">
                         <input
                           type="text"
-                          placeholder="Johnathan Doe"
+                          placeholder="Name..."
                           className="form-control form-control-line"
                         ></input>
                       </div>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group pb-2">
                       <label for="example-email" className="col-md-12">
                         Email
                       </label>
                       <div className="col-md-12">
                         <input
                           type="email"
-                          placeholder="johnathan@admin.com"
+                          required
+                          placeholder="Email..."
                           className="form-control form-control-line"
                           name="example-email"
                           id="example-email"
                         ></input>
                       </div>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group pb-2">
                       <label className="col-md-12">Password</label>
                       <div className="col-md-12">
                         <input
                           type="password"
-                          value="password"
+                          required
+                          placeholder="Pasword..."
                           className="form-control form-control-line"
                         ></input>
                       </div>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group pb-2">
                       <label className="col-md-12">Phone No</label>
                       <div className="col-md-12">
                         <input
                           type="text"
-                          placeholder="123 456 7890"
+                          required
+                          placeholder="+62 XXXXXXXX"
                           className="form-control form-control-line"
                         ></input>
                       </div>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group pb-2">
+                      <label className="col-md-12">Address</label>
+                      <div className="col-md-12">
+                        <input
+                          type="text"
+                          required
+                          placeholder="Address..."
+                          className="form-control form-control-line"
+                        ></input>
+                      </div>
+                    </div>
+                    <div className="form-group pb-2">
                       <label className="col-md-12">Message</label>
                       <div className="col-md-12">
                         <textarea
-                          rows="5"
+                          rows="3"
+                          required
+                          placeholder="Message..."
                           className="form-control form-control-line"
                         ></textarea>
                       </div>
                     </div>
-                    <div className="form-group">
-                      <label className="col-sm-12">Select Country</label>
+                    <div className="form-group pb-2">
                       <div className="col-sm-12">
-                        <select className="form-select shadow-none form-control-line">
-                          <option>Japan</option>
-                          <option>South Korea</option>
-                          <option>USA</option>
-                          <option>Indonesia</option>
-                          <option>Russia</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-sm-12">
-                        <button className="btn btn-success text-white">
+                        <button className="btn oren fw-bold">
                           Update Profile
                         </button>
                       </div>

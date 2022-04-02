@@ -18,7 +18,7 @@ const Categories = () => {
       <div className="konten-bungkus">
         <NavBar />
         {/* Page Konten */}
-        <div className="container-fluid">
+        <div className="container-fluid pb-4">
           <div className="card">
             <div className="card-body">
               <div className="card-title">
@@ -35,25 +35,44 @@ const Categories = () => {
                   style={{
                     float: "right",
                   }}
+                  className="fw-bold"
                   type="submit"
                 >
-                  <strong>ADD</strong>
+                  <i className="fas fa-plus-circle me-2"></i>ADD CATEGORIES
                 </Button>
               </div>
             </div>
           </div>
 
           <div className="card">
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Judul</th>
-                  <th>Details</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+            <div className="card-body">
+              <div className="table-responsive">
+                <table className="table text-center">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Judul</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Edukasi</td>
+                      <td>
+                        <a href="/EditCategories">
+                          <i className="fas fa-edit me-2"></i>
+                        </a>
+                        <i
+                          className="fa fa-trash text-danger"
+                          aria-hidden="true"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ class AddBlog extends Component {
                     float: "left",
                   }}
                 >
-                  Edit Blog
+                  Edit Kategori
                 </h4>
                 <Button
                   variant="outline-dark"
@@ -58,70 +58,13 @@ class AddBlog extends Component {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="2">
-                    Judul Blog
+                    Judul Kategori
                   </Form.Label>
                   <Col sm="10">
                     <Form.Control
                       type="text"
-                      placeholder="Judul Blog..."
+                      placeholder="Judul Kategori..."
                       required
-                    />
-                  </Col>
-                </Form.Group>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="2">
-                    Kategori
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Select name="category" required>
-                      <option disabled>Open this select menu</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                  </Col>
-                </Form.Group>
-                {/* <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="2">
-                    Upload Foto
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control type="file" required />
-                  </Col>
-                </Form.Group> */}
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="2">
-                    Isi Konten
-                  </Form.Label>
-                  <Col sm="10">
-                    <CKEditor
-                      editor={ClassicEditor}
-                      onReady={(editor) => {
-                        // You can store the "editor" and use when it is needed.
-                        console.log("Editor is ready to use!", editor);
-                      }}
-                      onChange={(event, editor) => {
-                        const data = editor.getData();
-                        console.log({ event, editor, data });
-                      }}
-                      onBlur={(event, editor) => {
-                        console.log("Blur.", editor);
-                      }}
-                      onFocus={(event, editor) => {
-                        console.log("Focus.", editor);
-                      }}
                     />
                   </Col>
                 </Form.Group>
@@ -132,7 +75,6 @@ class AddBlog extends Component {
                     style={{
                       float: "right",
                     }}
-                    type="submit"
                     className="fw-bold"
                   >
                     SIMPAN

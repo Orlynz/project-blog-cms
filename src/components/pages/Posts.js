@@ -8,10 +8,11 @@ import { Button } from "react-bootstrap";
 
 class App extends React.Component {
   componentDidMount() {
-    //initialize datatable
+    // datatable
     $(document).ready(function () {
       $("#example").DataTable();
     });
+    // toggled
     window.addEventListener("DOMContentLoaded", (event) => {
       const sidebarToggle = document.body.querySelector("#sidebarToggle");
       if (sidebarToggle) {
@@ -30,7 +31,7 @@ class App extends React.Component {
         <div className="konten-bungkus">
           <NavBar />
           {/* Page Konten */}
-          <div className="container-fluid">
+          <div className="container-fluid pb-4">
             <div className="card">
               <div className="card-body">
                 <div className="card-title">
@@ -48,8 +49,9 @@ class App extends React.Component {
                       float: "right",
                     }}
                     type="submit"
+                    className="fw-bold"
                   >
-                    <strong>ADD</strong>
+                    <i className="fas fa-plus-circle me-2"></i>ADD POSTS
                   </Button>
                 </div>
               </div>

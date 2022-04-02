@@ -11,7 +11,16 @@ body {
 .jingga {
   color: orange;
 }
-
+.oren {
+  float: right;
+  border-color: orange;
+  color: orange;
+}
+.oren:hover {
+  float: right;
+  background-color: orange;
+  color: white;
+}
 .merah {
   color: red;
 }

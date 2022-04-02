@@ -5,5 +5,15 @@ import Comments from "./Comments";
 import AddBlog from "./AddBlog";
 import AddCategories from "./AddCategories";
 import EditBlog from "./EditBlog";
+import EditCategories from "./EditCategories";
 
-export { Home, Posts, Categories, Comments, AddBlog, AddCategories, EditBlog };
+export {
+  Home,
+  Posts,
+  Categories,
+  Comments,
+  AddBlog,
+  AddCategories,
+  EditBlog,
+  EditCategories,
+};

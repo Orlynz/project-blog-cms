@@ -18,25 +18,45 @@ const Comments = () => {
       <div className="konten-bungkus">
         <NavBar />
         {/* Page Konten */}
-        <div className="container-fluid">
+        <div className="container-fluid pb-4">
           <div className="row">
             <div className="col">
               <div className="card">
                 <div className="card-body">
                   <div className="card-title text-center">
                     <h4>All Comment</h4>
+                    <hr />
                   </div>
                   <div className="table-responsive">
-                    <table className="table table-striped">
+                    <table className="table text-center">
                       <thead>
                         <tr>
                           <th>No</th>
                           <th>Nama</th>
                           <th>Comments</th>
-                          <th>Blog</th>
+                          <th>Tanggal</th>
                         </tr>
                       </thead>
-                      <tbody></tbody>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>Orlynz</td>
+                          <td>Hahahahahaha</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>Orlynz</td>
+                          <td>Hahahahahaha</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td>Orlynz</td>
+                          <td>Hahahahahaha</td>
+                          <td>1</td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                 </div>

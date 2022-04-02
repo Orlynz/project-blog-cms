@@ -24,7 +24,7 @@ class AddBlog extends Component {
         <div className="konten-bungkus">
           <NavBar />
           {/* Page Konten */}
-          <div className="container-fluid">
+          <div className="container-fluid pb-4">
             <Card className="shadow">
               <div className="card-header">
                 <h4>Add Blog</h4>
