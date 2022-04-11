@@ -1,6 +1,9 @@
-import React from "react";
-import SideBar from "./SideBar.js";
-import NavBar from "./NavBar.js";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useHistory } from "react-router-dom";
+import SideBar from "../SideBar.js";
+import NavBar from "../NavBar.js";
 
 const Profile = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -12,24 +15,67 @@ const Profile = () => {
       });
     }
   });
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+  const history = useHistory();
+
+  useEffect(() => {
+    refreshToken();
+  });
+
+  const refreshToken = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/token");
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setName(decoded.name);
+      setEmail(decoded.email);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        history.push("/");
+      }
+    }
+  };
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get("http://localhost:5000/token");
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   return (
     <div className="d-flex bungkus">
       <SideBar />
       <div className="konten-bungkus">
         <NavBar />
         <div className="container-fluid pb-4">
-          <div className="row">
+          <div className="row g-2">
             <div className="col-lg-4 col-xlg-3 col-md-5">
               <div className="card">
                 <div className="card-body">
                   <div className="m-t-30 center text-center">
                     <img
-                      src="https://i.pinimg.com/736x/3b/a2/c4/3ba2c46051c4fc2e7eb353f2eb1f08e4.jpg"
+                      src="https://wwbmmc.ca/wp-content/uploads/2020/12/kisspng-computer-icons-avatar-icon-design-male-teacher-5ade176c636ed2.2763610715245044284073.png"
                       className="rounded-circle"
                       width="200"
-                      height="200"
                     />
-                    <h2 className=" m-t-10">Orlynz Sambora</h2>
+                    <h2 className=" m-t-10">{name}</h2>
                     <br />
                     <h6 className="card-subtitle">
                       <i>"bwa bwaaa bwa bwa baw waaaaaaaaaaaa"</i>
@@ -38,12 +84,12 @@ const Profile = () => {
                 </div>
                 <hr />
                 <div className="card-body">
-                  <small className="text-muted">Email ddress </small>
-                  <h6>schwarz090404@gmail.com</h6>
+                  <small className="text-muted">Email</small>
+                  <h6>{email}</h6>
                   <small className="text-muted p-t-30 db">Phone</small>
-                  <h6>+628 9506 616 552</h6>
+                  <h6>+62 xxx xxx xxx</h6>
                   <small className="text-muted p-t-30 db">Address</small>
-                  <h6>Kalikangkung Street RT 2 RW 1</h6>
+                  <h6>Semarang</h6>
                   <hr />
                   <div className="text-center">
                     <a>

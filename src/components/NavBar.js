@@ -1,6 +1,37 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useHistory } from "react-router-dom";
 const NavBar = () => {
+  const [name, setName] = useState("");
+  const [, setToken] = useState("");
+  const history = useHistory();
+
+  useEffect(() => {
+    refreshToken();
+  });
+
+  const refreshToken = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/token");
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setName(decoded.name);
+    } catch (error) {
+      if (error.response) {
+        history.push("/");
+      }
+    }
+  };
+  window.addEventListener("DOMContentLoaded", (event) => {
+    const sidebarToggle = document.body.querySelector("#sidebarToggle");
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener("click", (event) => {
+        event.preventDefault();
+        document.body.classList.toggle("sidebar-toggle");
+      });
+    }
+  });
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
@@ -23,7 +54,7 @@ const NavBar = () => {
             <li className="nav-item">
               <a className="nav-link fw-bold text-black" href="/Profile">
                 <i className="fas fa-user me-2"></i>
-                Orlynz Sambora
+                {name}
               </a>
             </li>
           </ul>

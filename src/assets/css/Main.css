@@ -1,11 +1,11 @@
 body {
   background-image: linear-gradient(
     to right,
-    orange,
-    rgb(255, 172, 19),
-    rgb(255, 177, 32),
-    rgb(255, 179, 38),
-    rgb(255, 184, 52)
+    rgb(255, 179, 37),
+    rgb(255, 186, 59),
+    rgb(255, 192, 75),
+    rgb(255, 196, 86),
+    rgb(255, 203, 107)
   );
 }
 .jingga {
@@ -34,9 +34,18 @@ body {
   padding: 20px 30px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
+  background-image: linear-gradient(
+    to left,
+    orange,
+    rgb(255, 172, 19),
+    rgb(255, 177, 32),
+    rgb(255, 179, 38),
+    rgb(255, 184, 52)
+  );
+  color: white;
 }
 
-.list-group-item.active {
+/* .list-group-item.active {
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
   background-image: linear-gradient(
@@ -50,7 +59,7 @@ body {
   color: white;
   font-weight: bold;
   border: none;
-}
+} */
 
 .bungkus {
   overflow-x: hidden;
@@ -131,4 +140,172 @@ body.sidebar-toggle .bungkus .sidebar {
 }
 a {
   text-decoration: none;
+}
+
+.body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background-color: white;
+}
+#container {
+  position: relative;
+  max-width: 850px;
+  width: 100%;
+  background: #fff;
+  padding: 40px 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  perspective: 2700px;
+}
+#container .cover {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 50%;
+}
+#container .cover img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+#container .forms {
+  height: 100%;
+  width: 100%;
+  background: white;
+}
+/* #container .form-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+} */
+.form-content .login-form,
+.form-content .signup-form {
+  width: calc(100% / 2 - 25px);
+}
+.forms .form-content .title {
+  position: relative;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+.forms .form-content .title:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 25px;
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 179, 37),
+    rgb(255, 186, 59),
+    rgb(255, 192, 75),
+    rgb(255, 196, 86),
+    rgb(255, 203, 107)
+  );
+}
+.forms .signup-form .title:before {
+  width: 20px;
+}
+.forms .form-content .input-boxes {
+  margin-top: 30px;
+}
+.forms .form-content .input-box {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  margin: 10px 0;
+  position: relative;
+}
+.form-content .input-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  padding: 0 30px;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.form-content .input-box input:focus,
+.form-content .input-box input:valid {
+  border-color: orange;
+}
+.form-content .input-box i {
+  position: absolute;
+  color: orange;
+  font-size: 17px;
+}
+.forms .form-content .text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+.forms .form-content .text a:hover {
+  text-decoration: underline;
+}
+.forms .form-content .button {
+  color: #fff;
+  margin-top: 40px;
+}
+.forms .form-content .button input {
+  color: #fff;
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 179, 37),
+    rgb(255, 186, 59),
+    rgb(255, 192, 75),
+    rgb(255, 196, 86),
+    rgb(255, 203, 107)
+  );
+  border-radius: 6px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+.forms .form-content .button input:hover {
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 179, 37),
+    rgb(255, 186, 59),
+    rgb(255, 192, 75),
+    rgb(255, 196, 86),
+    rgb(255, 203, 107)
+  );
+}
+.forms .form-content label {
+  color: orange;
+  cursor: pointer;
+}
+.forms .form-content label:hover {
+  text-decoration: underline;
+}
+.forms .form-content .login-text,
+.forms .form-content .sign-up-text {
+  text-align: center;
+  margin-top: 25px;
+}
+@media (max-width: 730px) {
+  #container .cover {
+    display: none;
+  }
+  .form-content .login-form,
+  .form-content .signup-form {
+    width: 100%;
+  }
+  .form-content .signup-form {
+    display: none;
+  }
+  #container ~ .forms .signup-form {
+    display: block;
+  }
+  #container ~ .forms .login-form {
+    display: none;
+  }
 }

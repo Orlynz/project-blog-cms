@@ -6,6 +6,9 @@ import AddBlog from "./AddBlog";
 import AddCategories from "./AddCategories";
 import EditBlog from "./EditBlog";
 import EditCategories from "./EditCategories";
+import Profile from "./Profile";
+import Login from "./Login";
+import Register from "./Register";
 
 export {
   Home,
@@ -16,4 +19,7 @@ export {
   AddCategories,
   EditBlog,
   EditCategories,
+  Profile,
+  Login,
+  Register,
 };

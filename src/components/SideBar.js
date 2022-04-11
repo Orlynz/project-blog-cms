@@ -1,16 +1,29 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import $ from "jquery";
 const SideBar = () => {
-  $(function () {
-    var path = window.location.href; // Mengambil data URL pada Address bar
-    $("div a").each(function () {
-      // Jika URL pada menu ini sama persis dengan path...
-      if (this.href === path) {
-        // Tambahkan kelas "active" pada menu ini
-        $(this).addClass("active");
-      }
-    });
-  });
+  // $(function () {
+  //   var path = window.location.href; // Mengambil data URL pada Address bar
+  // $("div a").each(function () {
+  // Jika URL pada menu ini sama persis dengan path...
+  // if (this.href === path) {
+  // Tambahkan kelas "active" pada menu ini
+  //       $(this).addClass("active");
+  //     }
+  //   });
+  // });
+  const history = useHistory();
+
+  const Logout = async () => {
+    try {
+      await axios.delete("http://localhost:5000/logout");
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="bg-white sidebar">
       <div className="sidebar-head text-center py-4 jingga fs-4 fw-bold text-uppercase border-bottom">
@@ -18,7 +31,7 @@ const SideBar = () => {
       </div>
       <div className="list-group list-group-flush my-3">
         <a
-          href="/"
+          href="/Home"
           className="list-group-item list-group-item-action jingga fw-bold"
         >
           <i className="fa fa-home me-2"></i>Home
@@ -54,7 +67,7 @@ const SideBar = () => {
           <i className="fas fa-plus-circle me-2"></i>Add Categories
         </a> */}
         <a
-          href="/Logout"
+          onClick={Logout}
           className="list-group-item list-group-item-action merah fw-bold"
         >
           <i className="fas fa-power-off me-2"></i>Logout
