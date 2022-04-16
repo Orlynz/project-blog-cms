@@ -41,7 +41,7 @@ function App() {
           <Route path="/EditBlog/:id" exact>
             <EditBlog />
           </Route>
-          <Route path="/EditCategories" exact>
+          <Route path="/EditCategories/:id" exact>
             <EditCategories />
           </Route>
           <Route path="/Profile" exact>

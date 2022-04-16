@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
 
@@ -15,19 +15,47 @@ const Home = () => {
       });
     }
   });
-  const [, setToken] = useState("");
+
+  const [post, setPost] = useState([]);
+  const [comment, setComment] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  const [, setUsers] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
+    getAllPost();
+    getAllComment();
+    getAllCategory();
     refreshToken();
+    getUsers();
   });
+
+  const getAllPost = async () => {
+    const posts = await axios.get("http://localhost:2020/api/post/");
+    setPost(posts.data);
+  };
+  const getAllComment = async () => {
+    const comment = await axios.get("http://localhost:2020/api/comment/");
+    setComment(comment.data);
+  };
+  const getAllCategory = async () => {
+    const category = await axios.get("http://localhost:2020/api/category/");
+    setCategory(category.data);
+  };
+
+  const deletePost = async (id) => {
+    await axios.delete(`http://localhost:2020/api/post/${id}`);
+    getAllPost();
+  };
 
   const refreshToken = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/token");
+      const response = await axios.get("http://localhost:2020/api/users/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
+      // setName(decoded.name);
       setExpire(decoded.exp);
     } catch (error) {
       if (error.response) {
@@ -42,10 +70,13 @@ const Home = () => {
     async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
+        const response = await axios.get(
+          "http://localhost:2020/api/users/token"
+        );
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
+        // setName(decoded.name);
         setExpire(decoded.exp);
       }
       return config;
@@ -54,6 +85,19 @@ const Home = () => {
       return Promise.reject(error);
     }
   );
+
+  const getUsers = async () => {
+    const response = await axiosJWT.get(
+      "http://localhost:2020/api/users/users",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setUsers(response.data);
+  };
+
   return (
     <div className="d-flex bungkus">
       <SideBar />
@@ -74,28 +118,39 @@ const Home = () => {
                       <thead>
                         <tr>
                           <th>No</th>
+                          <th>Nama</th>
                           <th>Judul</th>
-                          <th>Kategori</th>
-                          <th>Tnggal</th>
+                          <th>Gambar</th>
+                          <th>Konten</th>
                           <th>Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Judul 1</td>
-                          <td>Kategori 1</td>
-                          <td>Tanggal 1</td>
-                          <td>
-                            <a href="/EditBlog">
-                              <i className="fas fa-edit me-2"></i>
-                            </a>
-                            <i
-                              className="fa fa-trash text-danger"
-                              aria-hidden="true"
-                            ></i>
-                          </td>
-                        </tr>
+                        {post.map((blog, index) => (
+                          <tr key={blog.id}>
+                            <td>{index + 1}</td>
+                            <td>{blog.name}</td>
+                            <td>{blog.title}</td>
+                            <td>
+                              <img
+                                src={`http://localhost:2020/${blog.image}`}
+                                width="100"
+                                alt=""
+                              />
+                            </td>
+                            <td>{blog.description.slice(0, 10)}..</td>
+                            <td>
+                              <a href={`/EditBlog/${blog.id}`}>
+                                <i className="fas fa-edit me-2"></i>
+                              </a>
+                              <i
+                                className="fa fa-trash text-danger"
+                                aria-hidden="true"
+                                onClick={() => deletePost(blog.id)}
+                              ></i>
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -107,7 +162,7 @@ const Home = () => {
                 <div className="card-body">
                   <h3>Posts</h3>
                   <h4 className="display-4 fw-bold">
-                    <i className="fas fa-pencil-alt"></i> 235
+                    <i className="fas fa-pencil-alt"></i> {post.length}
                   </h4>
                 </div>
               </div>
@@ -115,7 +170,7 @@ const Home = () => {
                 <div className="card-body">
                   <h3>Categories</h3>
                   <h4 className="display-4 fw-bold">
-                    <i className="fas fa-folder"></i> 134
+                    <i className="fas fa-folder"></i> {category.length}
                   </h4>
                 </div>
               </div>
@@ -123,7 +178,7 @@ const Home = () => {
                 <div className="card-body">
                   <h3>Comments</h3>
                   <h4 className="display-4 fw-bold">
-                    <i className="fas fa-comment-dots"></i> 53
+                    <i className="fas fa-comment-dots"></i> {comment.length}
                   </h4>
                 </div>
               </div>

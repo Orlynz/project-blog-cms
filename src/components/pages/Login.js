@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import image from "../../assets/images/6343825.jpg";
 import { useHistory } from "react-router-dom";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,7 +12,7 @@ const Login = () => {
   const Login = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/login", {
+      await axios.post("http://localhost:2020/api/users/login", {
         email: email,
         password: password,
       });
@@ -26,7 +28,7 @@ const Login = () => {
       <div className="container" id="container">
         <div className="cover">
           <div>
-            <img src="https://images7.alphacoders.com/714/714077.png" alt="" />
+            <img src={image} alt="" />
           </div>
         </div>
         <div className="forms">

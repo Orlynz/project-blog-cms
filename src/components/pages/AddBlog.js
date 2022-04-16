@@ -1,44 +1,56 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Card, Form, Col, Button, Row } from "react-bootstrap";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
 
 const AddBlog = () => {
-  const [nama, setNama] = useState("");
-  const [judul, setJudul] = useState("");
-  const [deskripsi, setDeskripsi] = useState("");
-  const [tanggal_upload, setTanggal_upload] = useState("");
+  window.addEventListener("DOMContentLoaded", (event) => {
+    const sidebarToggle = document.body.querySelector("#sidebarToggle");
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener("click", (event) => {
+        event.preventDefault();
+        document.body.classList.toggle("sidebar-toggle");
+      });
+    }
+  });
+
+  const [title, setTitle] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [, setToken] = useState("");
+  const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  const [, setUsers] = useState([]);
   const history = useHistory();
 
-  const tambahBlog = async (e) => {
+  const addProductHandler = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:5000/post", {
-      nama: nama,
-      judul: judul,
-      deskripsi: deskripsi,
-      image: image,
-      tanggal_upload: tanggal_upload,
-    });
+
+    const formData = new FormData();
+
+    formData.append("image", image);
+    formData.append("title", title);
+    formData.append("name", name);
+    formData.append("description", description);
+
+    await axios.post("http://localhost:2020/api/post/", formData);
     history.push("/Posts");
   };
 
   useEffect(() => {
     refreshToken();
+    getUsers();
   });
 
   const refreshToken = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/token");
+      const response = await axios.get("http://localhost:2020/api/users/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
+      // setName(decoded.name);
       setExpire(decoded.exp);
     } catch (error) {
       if (error.response) {
@@ -53,10 +65,13 @@ const AddBlog = () => {
     async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
+        const response = await axios.get(
+          "http://localhost:2020/api/users/token"
+        );
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
+        // setName(decoded.name);
         setExpire(decoded.exp);
       }
       return config;
@@ -66,15 +81,17 @@ const AddBlog = () => {
     }
   );
 
-  window.addEventListener("DOMContentLoaded", (event) => {
-    const sidebarToggle = document.body.querySelector("#sidebarToggle");
-    if (sidebarToggle) {
-      sidebarToggle.addEventListener("click", (event) => {
-        event.preventDefault();
-        document.body.classList.toggle("sidebar-toggle");
-      });
-    }
-  });
+  const getUsers = async () => {
+    const response = await axiosJWT.get(
+      "http://localhost:2020/api/users/users",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setUsers(response.data);
+  };
 
   return (
     <div className="d-flex bungkus">
@@ -92,7 +109,9 @@ const AddBlog = () => {
               style={{
                 padding: "10px",
               }}
-              onSubmit={tambahBlog}
+              onSubmit={addProductHandler}
+              method="POST"
+              encType="multipart/form-data"
             >
               <Form.Group
                 as={Row}
@@ -105,10 +124,10 @@ const AddBlog = () => {
                 <Col sm="10">
                   <Form.Control
                     type="text"
-                    placeholder="Nama mu..."
+                    placeholder="Nama..."
                     required
-                    value={nama}
-                    onChange={(e) => setNama(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </Col>
               </Form.Group>
@@ -125,8 +144,8 @@ const AddBlog = () => {
                     type="text"
                     placeholder="Judul Blog..."
                     required
-                    value={judul}
-                    onChange={(e) => setJudul(e.target.value)}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                   />
                 </Col>
               </Form.Group>
@@ -159,8 +178,8 @@ const AddBlog = () => {
                   <Form.Control
                     type="file"
                     required
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
+                    name="image"
+                    onChange={(e) => setImage(e.target.files[0])}
                   />
                 </Col>
               </Form.Group>
@@ -180,46 +199,12 @@ const AddBlog = () => {
                     name="nama"
                     placeholder="Isi konten..."
                     required
-                    value={deskripsi}
-                    onChange={(e) => setDeskripsi(e.target.value)}
-                  />
-                  {/* <CKEditor
-                      editor={ClassicEditor}
-                      onReady={(editor) => {
-                        // You can store the "editor" and use when it is needed.
-                        console.log("Editor is ready to use!", editor);
-                      }}
-                      onChange={(event, editor) => {
-                        const data = editor.getData();
-                        console.log({ event, editor, data });
-                      }}
-                      onBlur={(event, editor) => {
-                        console.log("Blur.", editor);
-                      }}
-                      onFocus={(event, editor) => {
-                        console.log("Focus.", editor);
-                      }}
-                    /> */}
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
-                <Form.Label column sm="2">
-                  Tanggal
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control
-                    type="date"
-                    placeholder="Tangal..."
-                    required
-                    value={tanggal_upload}
-                    onChange={(e) => setTanggal_upload(e.target.value)}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </Col>
               </Form.Group>
+
               <Col>
                 <Button
                   variant="outline-dark"
@@ -230,7 +215,25 @@ const AddBlog = () => {
                   }}
                   type="submit"
                 >
-                  <strong>SIMPAN</strong>
+                  <strong>
+                    SIMPAN <i class="fa fa-save"></i>
+                  </strong>
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  href="/Posts"
+                  variant="outline-dark"
+                  style={{
+                    padding: "5px",
+                    borderRadius: "10px",
+                    marginRight: "10px",
+                    float: "right",
+                  }}
+                >
+                  <strong>
+                    <i class="fas fa-caret-left"></i> BACK
+                  </strong>
                 </Button>
               </Col>
             </Form>

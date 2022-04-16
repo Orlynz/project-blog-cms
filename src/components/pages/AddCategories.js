@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
 import { Card, Form, Col, Button, Row } from "react-bootstrap";
+
 const AddCategories = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
     const sidebarToggle = document.body.querySelector("#sidebarToggle");
@@ -15,19 +16,34 @@ const AddCategories = () => {
       });
     }
   });
-  const [, setToken] = useState("");
+
+  const [name, setName] = useState("");
+  const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  const [, setUsers] = useState([]);
   const history = useHistory();
+
+  const addCategory = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("name", name);
+    await axios.post("http://localhost:2020/api/category", formData);
+    history.push("/Categories");
+  };
 
   useEffect(() => {
     refreshToken();
+    getUsers();
   });
 
   const refreshToken = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/token");
+      const response = await axios.get("http://localhost:2020/api/users/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
+      // setName(decoded.name);
       setExpire(decoded.exp);
     } catch (error) {
       if (error.response) {
@@ -42,10 +58,13 @@ const AddCategories = () => {
     async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
+        const response = await axios.get(
+          "http://localhost:2020/api/users/token"
+        );
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
+        // setName(decoded.name);
         setExpire(decoded.exp);
       }
       return config;
@@ -54,6 +73,19 @@ const AddCategories = () => {
       return Promise.reject(error);
     }
   );
+
+  const getUsers = async () => {
+    const response = await axiosJWT.get(
+      "http://localhost:2020/api/users/users",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setUsers(response.data);
+  };
+
   return (
     <div className="d-flex bungkus">
       <SideBar />
@@ -65,11 +97,13 @@ const AddCategories = () => {
             <div className="card-header">
               <h4>Add Categories</h4>
             </div>
-
             <Form
               style={{
                 padding: "10px",
               }}
+              onChange={addCategory}
+              method="POST"
+              encType="multipart/form-data"
             >
               <Form.Group
                 as={Row}
@@ -80,10 +114,15 @@ const AddCategories = () => {
                   Judul
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control type="text" placeholder="Judul..." required />
+                  <Form.Control
+                    type="text"
+                    placeholder="Judul..."
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
                 </Col>
               </Form.Group>
-
               <Col>
                 <Button
                   variant="outline-dark"
@@ -94,7 +133,25 @@ const AddCategories = () => {
                   }}
                   type="submit"
                 >
-                  <strong>SIMPAN</strong>
+                  <strong>
+                    SIMPAN <i class="fa fa-save"></i>
+                  </strong>
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  href="/Categories"
+                  variant="outline-dark"
+                  style={{
+                    padding: "5px",
+                    borderRadius: "10px",
+                    marginRight: "10px",
+                    float: "right",
+                  }}
+                >
+                  <strong>
+                    <i class="fas fa-caret-left"></i> BACK
+                  </strong>
                 </Button>
               </Col>
             </Form>

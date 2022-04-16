@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import image from "../../assets/images/6343825.jpg";
+
 const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,7 +14,7 @@ const Login = () => {
   const Register = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/users", {
+      await axios.post("http://localhost:2020/api/users/register", {
         name: name,
         email: email,
         password: password,
@@ -31,7 +33,7 @@ const Login = () => {
       <div className="container" id="container">
         <div className="cover">
           <div>
-            <img src="https://images7.alphacoders.com/714/714077.png" alt="" />
+            <img src={image} alt="" />
           </div>
         </div>
         <div className="forms">
@@ -45,7 +47,6 @@ const Login = () => {
                     <input
                       type="text"
                       placeholder="Enter your name"
-                      required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
@@ -55,7 +56,6 @@ const Login = () => {
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -65,7 +65,6 @@ const Login = () => {
                     <input
                       type="password"
                       placeholder="Enter your password"
-                      required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -75,7 +74,6 @@ const Login = () => {
                     <input
                       type="password"
                       placeholder="Enter confirm password"
-                      required
                       value={confPassword}
                       onChange={(e) => setConfPassword(e.target.value)}
                     />

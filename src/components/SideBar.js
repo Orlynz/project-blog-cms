@@ -1,23 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import $ from "jquery";
 const SideBar = () => {
-  // $(function () {
-  //   var path = window.location.href; // Mengambil data URL pada Address bar
-  // $("div a").each(function () {
-  // Jika URL pada menu ini sama persis dengan path...
-  // if (this.href === path) {
-  // Tambahkan kelas "active" pada menu ini
-  //       $(this).addClass("active");
-  //     }
-  //   });
-  // });
   const history = useHistory();
 
   const Logout = async () => {
     try {
-      await axios.delete("http://localhost:5000/logout");
+      await axios.delete("http://localhost:2020/api/users/logout");
       history.push("/");
     } catch (error) {
       console.log(error);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
 
@@ -15,19 +15,35 @@ const Comments = () => {
       });
     }
   });
-  const [, setToken] = useState("");
+
+  const [post, setPost] = useState([]);
+  const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  const [, setUsers] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
+    getAllPost();
     refreshToken();
+    getUsers();
   });
+
+  const getAllPost = async () => {
+    const posts = await axios.get("http://localhost:2020/api/comment/");
+    setPost(posts.data);
+  };
+
+  const deletePost = async (id) => {
+    await axios.delete(`http://localhost:2020/api/comment/${id}`);
+    getAllPost();
+  };
 
   const refreshToken = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/token");
+      const response = await axios.get("http://localhost:2020/api/users/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
+      // setName(decoded.name);
       setExpire(decoded.exp);
     } catch (error) {
       if (error.response) {
@@ -42,10 +58,13 @@ const Comments = () => {
     async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
+        const response = await axios.get(
+          "http://localhost:2020/api/users/token"
+        );
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
+        // setName(decoded.name);
         setExpire(decoded.exp);
       }
       return config;
@@ -54,6 +73,19 @@ const Comments = () => {
       return Promise.reject(error);
     }
   );
+
+  const getUsers = async () => {
+    const response = await axiosJWT.get(
+      "http://localhost:2020/api/users/users",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setUsers(response.data);
+  };
+
   return (
     <div className="d-flex bungkus">
       <SideBar />
@@ -75,30 +107,26 @@ const Comments = () => {
                         <tr>
                           <th>No</th>
                           <th>Nama</th>
+                          <th>Post</th>
                           <th>Comments</th>
-                          <th>Tanggal</th>
+                          <th>Aksi</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Orlynz</td>
-                          <td>Hahahahahaha</td>
-                          <td>1</td>
+                      {post.map((blog, index) => (
+                        <tr key={blog.id}>
+                          <td>{index + 1}</td>
+                          <td>{blog.username}</td>
+                          <td>{blog.post_id}</td>
+                          <td>{blog.text}</td>
+                          <td>
+                            <i
+                              className="fa fa-trash text-danger"
+                              aria-hidden="true"
+                              onClick={() => deletePost(blog.id)}
+                            ></i>
+                          </td>
                         </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Orlynz</td>
-                          <td>Hahahahahaha</td>
-                          <td>1</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Orlynz</td>
-                          <td>Hahahahahaha</td>
-                          <td>1</td>
-                        </tr>
-                      </tbody>
+                      ))}
                     </table>
                   </div>
                 </div>

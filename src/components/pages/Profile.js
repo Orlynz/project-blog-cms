@@ -28,7 +28,7 @@ const Profile = () => {
 
   const refreshToken = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/token");
+      const response = await axios.get("http://localhost:2020/api/users/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
       setName(decoded.name);
@@ -47,7 +47,9 @@ const Profile = () => {
     async (config) => {
       const currentDate = new Date();
       if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
+        const response = await axios.get(
+          "http://localhost:2020/api/users/token"
+        );
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
@@ -187,7 +189,7 @@ const Profile = () => {
                     </div>
                     <div className="form-group pb-2">
                       <div className="col-sm-12">
-                        <button className="btn oren fw-bold">
+                        <button className="btn btn-outline-dark float-end fw-bold">
                           Update Profile
                         </button>
                       </div>
