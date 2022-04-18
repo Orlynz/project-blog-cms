@@ -92,7 +92,7 @@ const Comments = () => {
       <div className="konten-bungkus">
         <NavBar />
         {/* Page Konten */}
-        <div className="container-fluid pb-4">
+        <div className="container pb-4">
           <div className="row">
             <div className="col">
               <div className="card">

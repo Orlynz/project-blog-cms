@@ -92,7 +92,7 @@ const Posts = () => {
       <div className="konten-bungkus">
         <NavBar />
         {/* Page Konten */}
-        <div className="container-fluid pb-4">
+        <div className="container pb-4">
           <div className="card">
             <div className="card-body">
               <div className="card-title">
@@ -136,7 +136,7 @@ const Posts = () => {
                       <tr key={blog.id}>
                         <td>{index + 1}</td>
                         <td>{blog.name}</td>
-                        <td>{blog.title}</td>
+                        <td>{blog.title.slice(0, 15)}..</td>
                         <td>
                           <img
                             src={`http://localhost:2020/${blog.image}`}
@@ -144,7 +144,7 @@ const Posts = () => {
                             alt=""
                           />
                         </td>
-                        <td>{blog.description.slice(0, 10)}..</td>
+                        <td>{blog.description.slice(0, 20)}..</td>
                         <td>
                           <a href={`/EditBlog/${blog.id}`}>
                             <i className="fas fa-edit me-2"></i>

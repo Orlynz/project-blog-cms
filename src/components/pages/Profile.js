@@ -66,7 +66,7 @@ const Profile = () => {
       <SideBar />
       <div className="konten-bungkus">
         <NavBar />
-        <div className="container-fluid pb-4">
+        <div className="container pb-4">
           <div className="row g-2">
             <div className="col-lg-4 col-xlg-3 col-md-5">
               <div className="card">

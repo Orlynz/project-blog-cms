@@ -102,8 +102,6 @@ const AddCategories = () => {
                 padding: "10px",
               }}
               onChange={addCategory}
-              method="POST"
-              encType="multipart/form-data"
             >
               <Form.Group
                 as={Row}

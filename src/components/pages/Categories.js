@@ -93,7 +93,7 @@ const Categories = () => {
       <div className="konten-bungkus">
         <NavBar />
         {/* Page Konten */}
-        <div className="container-fluid pb-4">
+        <div className="container pb-4">
           <div className="card">
             <div className="card-body">
               <div className="card-title">
