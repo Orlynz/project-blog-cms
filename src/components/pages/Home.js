@@ -30,7 +30,7 @@ const Home = () => {
     getAllCategory();
     refreshToken();
     getUsers();
-  });
+  }, []);
 
   const getAllPost = async () => {
     const posts = await axios.get("http://localhost:2020/api/post/");

@@ -55,8 +55,7 @@ const Login = () => {
                   <div className="input-box">
                     <i className="fas fa-envelope"></i>
                     <input
-                      type="email"
-                      required
+                      type="text"
                       placeholder="Enter your email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -66,7 +65,6 @@ const Login = () => {
                     <i className="fas fa-lock"></i>
                     <input
                       type="password"
-                      required
                       placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -78,7 +76,6 @@ const Login = () => {
                       type="password"
                       placeholder="Enter confirm password"
                       value={confPassword}
-                      required
                       onChange={(e) => setConfPassword(e.target.value)}
                     />
                   </div>

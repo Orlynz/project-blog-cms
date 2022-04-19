@@ -40,9 +40,8 @@ const Login = () => {
                   <div className="input-box">
                     <i className="fas fa-envelope"></i>
                     <input
-                      type="email"
+                      type="text"
                       placeholder="Enter your email"
-                      required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -52,7 +51,6 @@ const Login = () => {
                     <input
                       type="password"
                       placeholder="Enter your password"
-                      required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />

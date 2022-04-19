@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import { Card, Form, Col, Button, Row } from "react-bootstrap";
@@ -19,9 +18,6 @@ const EditCategories = () => {
 
   const { id } = useParams();
   const history = useHistory();
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
-  const [, setUsers] = useState([]);
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -47,59 +43,6 @@ const EditCategories = () => {
     await axios.put(`http://localhost:2020/api/category/${id}`, data);
 
     history.push("/Categories");
-  };
-
-  useEffect(() => {
-    refreshToken();
-    getUsers();
-  });
-
-  const refreshToken = async () => {
-    try {
-      const response = await axios.get("http://localhost:2020/api/users/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      // setName(decoded.name);
-      setExpire(decoded.exp);
-    } catch (error) {
-      if (error.response) {
-        history.push("/");
-      }
-    }
-  };
-
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get(
-          "http://localhost:2020/api/users/token"
-        );
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        // setName(decoded.name);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  const getUsers = async () => {
-    const response = await axiosJWT.get(
-      "http://localhost:2020/api/users/users",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    setUsers(response.data);
   };
 
   return (

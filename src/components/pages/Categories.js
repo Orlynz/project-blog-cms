@@ -27,7 +27,7 @@ const Categories = () => {
     getAllCategory();
     refreshToken();
     getUsers();
-  });
+  }, []);
 
   const getAllCategory = async () => {
     const category = await axios.get("http://localhost:2020/api/category/");

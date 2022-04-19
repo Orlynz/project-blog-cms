@@ -26,17 +26,18 @@ const AddCategories = () => {
   const addCategory = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    let category = {
+      name: name,
+    };
 
-    formData.append("name", name);
-    await axios.post("http://localhost:2020/api/category", formData);
+    await axios.post("http://localhost:2020/api/category", category);
     history.push("/Categories");
   };
 
   useEffect(() => {
     refreshToken();
     getUsers();
-  });
+  }, []);
 
   const refreshToken = async () => {
     try {

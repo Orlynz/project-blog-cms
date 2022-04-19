@@ -43,7 +43,7 @@ const AddBlog = () => {
   useEffect(() => {
     refreshToken();
     getUsers();
-  });
+  }, []);
 
   const refreshToken = async () => {
     try {

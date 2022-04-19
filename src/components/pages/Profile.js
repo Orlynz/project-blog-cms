@@ -24,7 +24,7 @@ const Profile = () => {
 
   useEffect(() => {
     refreshToken();
-  });
+  }, []);
 
   const refreshToken = async () => {
     try {
