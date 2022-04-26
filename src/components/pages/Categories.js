@@ -94,6 +94,16 @@ const Categories = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
+          <ul class="breadcrumb">
+            <li>
+              <a href="/Home">
+                <i className="fa fa-home me-2"></i>Home
+              </a>
+            </li>
+            <li>
+              <i className="fas fa-folder me-2"></i>Category
+            </li>
+          </ul>
           <div className="card">
             <div className="card-body">
               <div className="card-title">
@@ -102,10 +112,10 @@ const Categories = () => {
                     float: "left",
                   }}
                 >
-                  All Categories
+                  All Category
                 </h4>
                 <Button
-                  href="/AddCategories"
+                  href="/AddCategory"
                   variant="outline-dark"
                   style={{
                     float: "right",
@@ -113,7 +123,7 @@ const Categories = () => {
                   className="fw-bold"
                   type="submit"
                 >
-                  <i className="fas fa-plus-circle me-2"></i>ADD CATEGORIES
+                  <i className="fas fa-plus-circle me-2"></i>ADD CATEGORY
                 </Button>
               </div>
             </div>
@@ -136,7 +146,7 @@ const Categories = () => {
                         <td>{index + 1}</td>
                         <td>{categories.name}</td>
                         <td>
-                          <a href={`/EditCategories/${categories.id}`}>
+                          <a href={`/EditCategory/${categories.id}`}>
                             <i className="fas fa-edit me-2"></i>
                           </a>
                           <i

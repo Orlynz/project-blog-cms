@@ -4,6 +4,7 @@ import axios from "axios";
 import { Card, Form, Col, Button, Row } from "react-bootstrap";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
+import jwt_decode from "jwt-decode";
 
 const EditCategories = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -17,6 +18,9 @@ const EditCategories = () => {
   });
 
   const { id } = useParams();
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+  const [, setUsers] = useState([]);
   const history = useHistory();
   const [name, setName] = useState("");
 
@@ -29,20 +33,67 @@ const EditCategories = () => {
     };
 
     getDataById();
+    refreshToken();
+    getUsers();
   }, [id]);
 
   const updateHandler = async (e) => {
     e.preventDefault();
-
-    // update by put request
 
     const data = {
       name: name,
     };
 
     await axios.put(`http://localhost:2020/api/category/${id}`, data);
+    history.push("/Category");
+  };
 
-    history.push("/Categories");
+  const refreshToken = async () => {
+    try {
+      const response = await axios.get("http://localhost:2020/api/users/token");
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      // setName(decoded.name);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        history.push("/");
+      }
+    }
+  };
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get(
+          "http://localhost:2020/api/users/token"
+        );
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        // setName(decoded.name);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getUsers = async () => {
+    const response = await axiosJWT.get(
+      "http://localhost:2020/api/users/users",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setUsers(response.data);
   };
 
   return (
@@ -52,6 +103,21 @@ const EditCategories = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
+          <ul class="breadcrumb">
+            <li>
+              <a href="/Home">
+                <i className="fa fa-home me-2"></i>Home
+              </a>
+            </li>
+            <li>
+              <a href="/Category">
+                <i className="fas fa-folder me-2"></i>Category
+              </a>
+            </li>
+            <li>
+              <i className="fas fa-edit me-2"></i>Edit Category
+            </li>
+          </ul>
           <Card className="shadow">
             <div className="card-header">
               <h4
@@ -99,22 +165,6 @@ const EditCategories = () => {
                 >
                   <strong>
                     SIMPAN <i class="fa fa-save"></i>
-                  </strong>
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  href="/Categories"
-                  variant="outline-dark"
-                  style={{
-                    padding: "5px",
-                    borderRadius: "10px",
-                    marginRight: "10px",
-                    float: "right",
-                  }}
-                >
-                  <strong>
-                    <i class="fas fa-caret-left"></i> BACK
                   </strong>
                 </Button>
               </Col>

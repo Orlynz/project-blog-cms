@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
+import jwt_decode from "jwt-decode";
 
 const Comments = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -15,9 +17,15 @@ const Comments = () => {
   });
 
   const [post, setPost] = useState([]);
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+  const [, setUsers] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     getAllPost();
+    refreshToken();
+    getUsers();
   }, []);
 
   const getAllPost = async () => {
@@ -30,6 +38,54 @@ const Comments = () => {
     getAllPost();
   };
 
+  const refreshToken = async () => {
+    try {
+      const response = await axios.get("http://localhost:2020/api/users/token");
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      // setName(decoded.name);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        history.push("/");
+      }
+    }
+  };
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get(
+          "http://localhost:2020/api/users/token"
+        );
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        // setName(decoded.name);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getUsers = async () => {
+    const response = await axiosJWT.get(
+      "http://localhost:2020/api/users/users",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setUsers(response.data);
+  };
+
   return (
     <div className="d-flex bungkus">
       <SideBar />
@@ -37,6 +93,16 @@ const Comments = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
+          <ul class="breadcrumb">
+            <li>
+              <a href="/Home">
+                <i className="fa fa-home me-2"></i>Home
+              </a>
+            </li>
+            <li>
+              <i className="fas fa-comment-dots me-2"></i>Comment
+            </li>
+          </ul>
           <div className="row">
             <div className="col">
               <div className="card">

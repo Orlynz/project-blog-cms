@@ -4,7 +4,7 @@ import Categories from "./Categories";
 import Comments from "./Comments";
 import AddBlog from "./AddBlog";
 import AddCategories from "./AddCategories";
-import EditBlog from "./EditBlog";
+import EditBlog from "./Edit";
 import EditCategories from "./EditCategories";
 import Profile from "./Profile";
 import Login from "./Login";

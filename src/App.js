@@ -23,25 +23,23 @@ function App() {
           <Route path="/Home" exact>
             <Home />
           </Route>
-          <Route path="/Posts" exact>
+          <Route path="/Post" exact>
             <Posts />
           </Route>
-          <Route path="/Categories" exact>
+          <Route path="/Category" exact>
             <Categories />
           </Route>
-          <Route path="/Comments" exact>
+          <Route path="/Comment" exact>
             <Comments />
           </Route>
-          <Route path="/AddCategories" exact>
+          <Route path="/AddCategory" exact>
             <AddCategories />
           </Route>
-          <Route path="/AddBlog" exact>
+          <Route path="/AddPost" exact>
             <AddBlog />
           </Route>
-          <Route path="/EditBlog/:id" exact>
-            <EditBlog />
-          </Route>
-          <Route path="/EditCategories/:id" exact>
+          <Route path="/EditPost/:postID" exact component={EditBlog} />
+          <Route path="/EditCategory/:id" exact>
             <EditCategories />
           </Route>
           <Route path="/Profile" exact>

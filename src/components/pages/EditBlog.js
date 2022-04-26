@@ -1,115 +1,132 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  EditorState,
+  convertToRaw,
+  ContentState,
+  convertFromHTML,
+} from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import draftToHtml from "draftjs-to-html";
+import { useHistory } from "react-router-dom";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 import { Card, Form, Col, Button, Row } from "react-bootstrap";
-import SideBar from "../SideBar.js";
-import NavBar from "../NavBar.js";
 
-const AddBlog = () => {
-  window.addEventListener("DOMContentLoaded", (event) => {
-    const sidebarToggle = document.body.querySelector("#sidebarToggle");
-    if (sidebarToggle) {
-      sidebarToggle.addEventListener("click", (event) => {
-        event.preventDefault();
-        document.body.classList.toggle("sidebar-toggle");
-      });
-    }
+const AddBlog = (props) => {
+  let history = useHistory();
+  const [userInfo, setuserInfo] = useState({
+    title: props.postList[0].title,
+    name: props.postList[0].name,
   });
+  const onChangeValue = (e) => {
+    setuserInfo({
+      ...userInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+  let editorState = EditorState.createWithContent(
+    ContentState.createFromBlockArray(
+      convertFromHTML(props.postList[0].description)
+    )
+  );
+  const [description, setDescription] = useState(editorState);
 
-  const { id } = useParams();
-  const history = useHistory();
-  const [title, setTitle] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const onEditorStateChange = (editorState) => {
+    setDescription(editorState);
+  };
 
-  useEffect(() => {
-    const getDataById = async () => {
-      const { data } = await axios.get(`http://localhost:2020/api/post/${id}`);
-      setTitle(data.title);
-      setName(data.name);
-      setDescription(data.description);
-    };
-
-    getDataById();
-  }, [id]);
-
-  const updateHandler = async (e) => {
-    e.preventDefault();
-
-    // update by put request
-
-    const data = {
-      title: title,
-      name: name,
-      description: description,
-    };
-
-    await axios.put(`http://localhost:2020/api/post/${id}`, data);
-
-    history.push("/Posts");
+  const PoemAddbooks = async (event) => {
+    try {
+      event.preventDefault();
+      event.persist();
+      axios
+        .post(`http://localhost:2020/editPost`, {
+          title: userInfo.title,
+          name: userInfo.name,
+          description: userInfo.description.value,
+          ids: props.editPostID,
+        })
+        .then((res) => {
+          if (res.data.success === true) {
+            history.push("/Post");
+          }
+        });
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
-    <div className="d-flex bungkus">
-      <SideBar />
-      <div className="konten-bungkus">
-        <NavBar />
-        {/* Page Konten */}
-        <div className="container pb-4">
-          <Card className="shadow">
-            <div className="card-header">
-              <h4
-                style={{
-                  float: "left",
-                }}
-              >
-                Edit Blog
-              </h4>
-            </div>
+    <div className="container pb-4">
+      <ul class="breadcrumb">
+        <li>
+          <a href="/Home">
+            <i className="fa fa-home me-2"></i>Home
+          </a>
+        </li>
+        <li>
+          <a href="/Post">
+            <i className="fas fa-folder me-2"></i>Post
+          </a>
+        </li>
+        <li>
+          <i className="fas fa-edit me-2"></i>Edit Post
+        </li>
+      </ul>
+      <Card className="shadow">
+        <div className="card-header">
+          <h4
+            style={{
+              float: "left",
+            }}
+          >
+            Edit Blog
+          </h4>
+        </div>
 
-            <Form
-              style={{
-                padding: "10px",
-              }}
-              onSubmit={updateHandler}
-            >
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
-                <Form.Label column sm="2">
-                  Nama
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control
-                    type="text"
-                    placeholder="Nama mu..."
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
-                <Form.Label column sm="2">
-                  Judul Blog
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control
-                    type="text"
-                    placeholder="Judul Blog..."
-                    required
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                </Col>
-              </Form.Group>
-              {/* <Form.Group
+        <Form
+          style={{
+            padding: "10px",
+          }}
+          onSubmit={PoemAddbooks}
+        >
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formPlaintextPassword"
+          >
+            <Form.Label column sm="2">
+              Nama
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control
+                type="text"
+                placeholder="Nama mu..."
+                required
+                value={userInfo.name}
+                onChange={onChangeValue}
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formPlaintextPassword"
+          >
+            <Form.Label column sm="2">
+              Judul Blog
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control
+                type="text"
+                placeholder="Judul Blog..."
+                required
+                value={userInfo.title}
+                onChange={onChangeValue}
+              />
+            </Col>
+          </Form.Group>
+          {/* <Form.Group
                 as={Row}
                 className="mb-3"
                 controlId="formPlaintextPassword"
@@ -126,62 +143,49 @@ const AddBlog = () => {
                   </Form.Select>
                 </Col>
               </Form.Group> */}
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
-                <Form.Label column sm="2">
-                  Isi Konten
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Control
-                    type="text"
-                    as="textarea"
-                    rows={3}
-                    name="nama"
-                    placeholder="Isi konten..."
-                    required
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </Col>
-              </Form.Group>
-              <Col>
-                <Button
-                  variant="outline-dark"
-                  style={{
-                    padding: "5px",
-                    borderRadius: "10px",
-                    float: "right",
-                  }}
-                  type="submit"
-                >
-                  <strong>
-                    SIMPAN <i class="fa fa-save"></i>
-                  </strong>
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  href="/Posts"
-                  variant="outline-dark"
-                  style={{
-                    padding: "5px",
-                    borderRadius: "10px",
-                    marginRight: "10px",
-                    float: "right",
-                  }}
-                >
-                  <strong>
-                    <i class="fas fa-caret-left"></i> BACK
-                  </strong>
-                </Button>
-              </Col>
-            </Form>
-          </Card>
-        </div>
-      </div>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formPlaintextPassword"
+          >
+            <Form.Label column sm="2">
+              Isi Konten
+            </Form.Label>
+            <Col sm="10">
+              <Editor
+                editorState={description}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onEditorStateChange}
+              />
+              <textarea
+                style={{ display: "none" }}
+                disabled
+                ref={(val) => (userInfo.description = val)}
+                value={draftToHtml(
+                  convertToRaw(description.getCurrentContent())
+                )}
+              />
+            </Col>
+          </Form.Group>
+          <Col>
+            <Button
+              variant="outline-dark"
+              style={{
+                padding: "5px",
+                borderRadius: "10px",
+                float: "right",
+              }}
+              type="submit"
+            >
+              <strong>
+                SIMPAN <i class="fa fa-save"></i>
+              </strong>
+            </Button>
+          </Col>
+        </Form>
+      </Card>
     </div>
   );
 };

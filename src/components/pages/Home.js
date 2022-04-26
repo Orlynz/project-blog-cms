@@ -105,12 +105,17 @@ const Home = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
+          <ul class="breadcrumb">
+            <li>
+              <i className="fa fa-home me-2"></i>Home
+            </li>
+          </ul>
           <div className="row g-2">
             <div className="col-md-9">
               <div className="card">
                 <div className="card-body">
                   <div className="card-title text-center">
-                    <h4>Posts Terbaru</h4>
+                    <h4>Post Terbaru</h4>
                     <hr />
                   </div>
                   <div className="table-responsive">
@@ -138,9 +143,16 @@ const Home = () => {
                                 alt=""
                               />
                             </td>
-                            <td>{blog.description.slice(0, 15)}..</td>
                             <td>
-                              <a href={`/EditBlog/${blog.id}`}>
+                              <div
+                                className="blog-text"
+                                dangerouslySetInnerHTML={{
+                                  __html: blog.description.slice(0, 30),
+                                }}
+                              />
+                            </td>
+                            <td>
+                              <a href={`/EditPost/${blog.id}`}>
                                 <i className="fas fa-edit me-2"></i>
                               </a>
                               <i
@@ -160,7 +172,7 @@ const Home = () => {
             <div className="col-md-3">
               <div className="card text-center backgroud mb-3">
                 <div className="card-body">
-                  <h3>Posts</h3>
+                  <h3>Post</h3>
                   <h4 className="display-4 fw-bold">
                     <i className="fas fa-pencil-alt"></i> {post.length}
                   </h4>
@@ -168,7 +180,7 @@ const Home = () => {
               </div>
               <div className="card text-center backgroud mb-3">
                 <div className="card-body">
-                  <h3>Categories</h3>
+                  <h3>Category</h3>
                   <h4 className="display-4 fw-bold">
                     <i className="fas fa-folder"></i> {category.length}
                   </h4>
@@ -176,7 +188,7 @@ const Home = () => {
               </div>
               <div className="card text-center backgroud mb-3">
                 <div className="card-body">
-                  <h3>Comments</h3>
+                  <h3>Comment</h3>
                   <h4 className="display-4 fw-bold">
                     <i className="fas fa-comment-dots"></i> {comment.length}
                   </h4>

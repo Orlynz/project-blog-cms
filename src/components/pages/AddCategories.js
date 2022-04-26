@@ -30,8 +30,8 @@ const AddCategories = () => {
       name: name,
     };
 
-    await axios.post("http://localhost:2020/api/category", category);
-    history.push("/Categories");
+    await axios.post(`http://localhost:2020/api/category/`, category);
+    history.push("/Category");
   };
 
   useEffect(() => {
@@ -94,15 +94,30 @@ const AddCategories = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container-fluid pb-4">
+          <ul class="breadcrumb">
+            <li>
+              <a href="/Home">
+                <i className="fa fa-home me-2"></i>Home
+              </a>
+            </li>
+            <li>
+              <a href="/Category">
+                <i className="fas fa-folder me-2"></i>Categories
+              </a>
+            </li>
+            <li>
+              <i className="fas fa-plus-circle me-2"></i>Add Category
+            </li>
+          </ul>
           <Card className="shadow">
             <div className="card-header">
-              <h4>Add Categories</h4>
+              <h4>Add Category</h4>
             </div>
             <Form
               style={{
                 padding: "10px",
               }}
-              onChange={addCategory}
+              onSubmit={addCategory}
             >
               <Form.Group
                 as={Row}
@@ -134,22 +149,6 @@ const AddCategories = () => {
                 >
                   <strong>
                     SIMPAN <i class="fa fa-save"></i>
-                  </strong>
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  href="/Categories"
-                  variant="outline-dark"
-                  style={{
-                    padding: "5px",
-                    borderRadius: "10px",
-                    marginRight: "10px",
-                    float: "right",
-                  }}
-                >
-                  <strong>
-                    <i class="fas fa-caret-left"></i> BACK
                   </strong>
                 </Button>
               </Col>

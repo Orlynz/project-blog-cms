@@ -5,6 +5,10 @@ import { useHistory } from "react-router-dom";
 import { Card, Form, Col, Button, Row } from "react-bootstrap";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
+import { EditorState, convertToRaw } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import draftToHtml from "draftjs-to-html";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const AddBlog = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -16,10 +20,22 @@ const AddBlog = () => {
       });
     }
   });
+  const [userInfo] = useState({});
+  // const onChangeValue = (e) => {
+  //   setuserInfo({
+  //     ...userInfo,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
+  let editorState = EditorState.createEmpty();
+  const [description, setDescription] = useState(editorState);
+  const onEditorStateChange = (editorState) => {
+    setDescription(editorState);
+  };
   const [title, setTitle] = useState("");
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  // const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
@@ -28,16 +44,16 @@ const AddBlog = () => {
 
   const addProductHandler = async (e) => {
     e.preventDefault();
-
+    e.persist();
     const formData = new FormData();
 
     formData.append("image", image);
     formData.append("title", title);
     formData.append("name", name);
-    formData.append("description", description);
+    formData.append("description", userInfo.description.value);
 
-    await axios.post("http://localhost:2020/api/post/", formData);
-    history.push("/Posts");
+    axios.post(`http://localhost:2020/api/post/`, formData);
+    history.push("/Post");
   };
 
   useEffect(() => {
@@ -100,7 +116,22 @@ const AddBlog = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
-          <Card className="shadow">
+          <ul class="breadcrumb">
+            <li>
+              <a href="/Home">
+                <i className="fa fa-home me-2"></i>Home
+              </a>
+            </li>
+            <li>
+              <a href="/Post">
+                <i className="fas fa-pencil-alt me-2"></i>Posts
+              </a>
+            </li>
+            <li>
+              <i className="fas fa-plus-circle me-2"></i>Add Post
+            </li>
+          </ul>
+          <Card className="card">
             <div className="card-header">
               <h4>Add Blog</h4>
             </div>
@@ -192,7 +223,7 @@ const AddBlog = () => {
                   Isi Konten
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control
+                  {/* <Form.Control
                     type="text"
                     as="textarea"
                     rows={3}
@@ -201,6 +232,21 @@ const AddBlog = () => {
                     required
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                  /> */}
+                  <Editor
+                    editorState={description}
+                    toolbarClassName="toolbarClassName"
+                    wrapperClassName="wrapperClassName"
+                    editorClassName="editorClassName"
+                    onEditorStateChange={onEditorStateChange}
+                  />
+                  <textarea
+                    style={{ display: "none" }}
+                    disabled
+                    ref={(val) => (userInfo.description = val)}
+                    value={draftToHtml(
+                      convertToRaw(description.getCurrentContent())
+                    )}
                   />
                 </Col>
               </Form.Group>
@@ -217,22 +263,6 @@ const AddBlog = () => {
                 >
                   <strong>
                     SIMPAN <i class="fa fa-save"></i>
-                  </strong>
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  href="/Posts"
-                  variant="outline-dark"
-                  style={{
-                    padding: "5px",
-                    borderRadius: "10px",
-                    marginRight: "10px",
-                    float: "right",
-                  }}
-                >
-                  <strong>
-                    <i class="fas fa-caret-left"></i> BACK
                   </strong>
                 </Button>
               </Col>

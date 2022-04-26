@@ -5,6 +5,9 @@ import axios from "axios";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
 import { Button } from "react-bootstrap";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 
 const Posts = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -86,6 +89,11 @@ const Posts = () => {
     await axios.delete(`http://localhost:2020/api/post/${id}`);
     getAllPost();
   };
+  $(document).ready(function () {
+    setTimeout(function () {
+      $("#example").DataTable();
+    }, 1000);
+  });
   return (
     <div className="d-flex bungkus">
       <SideBar />
@@ -93,6 +101,16 @@ const Posts = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
+          <ul class="breadcrumb">
+            <li>
+              <a href="/Home">
+                <i className="fa fa-home me-2"></i>Home
+              </a>
+            </li>
+            <li>
+              <i className="fas fa-pencil-alt me-2"></i>Post
+            </li>
+          </ul>
           <div className="card">
             <div className="card-body">
               <div className="card-title">
@@ -101,10 +119,10 @@ const Posts = () => {
                     float: "left",
                   }}
                 >
-                  All Posts
+                  All Post
                 </h4>
                 <Button
-                  href="/AddBlog"
+                  href="/AddPost"
                   variant="outline-dark"
                   style={{
                     float: "right",
@@ -112,7 +130,7 @@ const Posts = () => {
                   type="submit"
                   className="fw-bold"
                 >
-                  <i className="fas fa-plus-circle me-2"></i>ADD POSTS
+                  <i className="fas fa-plus-circle me-2"></i>ADD POST
                 </Button>
               </div>
             </div>
@@ -120,13 +138,13 @@ const Posts = () => {
           <div className="card">
             <div className="card-body">
               <div className="table-responsive">
-                <table className="table text-center">
+                <table id="example" className="table text-center">
                   <thead>
                     <tr>
                       <th>No</th>
+                      <th>Gambar</th>
                       <th>Nama</th>
                       <th>Judul</th>
-                      <th>Gambar</th>
                       <th>Konten</th>
                       <th>Aksi</th>
                     </tr>
@@ -135,8 +153,6 @@ const Posts = () => {
                     {post.map((blog, index) => (
                       <tr key={blog.id}>
                         <td>{index + 1}</td>
-                        <td>{blog.name}</td>
-                        <td>{blog.title.slice(0, 15)}..</td>
                         <td>
                           <img
                             src={`http://localhost:2020/${blog.image}`}
@@ -144,9 +160,18 @@ const Posts = () => {
                             alt=""
                           />
                         </td>
-                        <td>{blog.description.slice(0, 20)}..</td>
+                        <td>{blog.name}</td>
+                        <td>{blog.title.slice(0, 15)}..</td>
                         <td>
-                          <a href={`/EditBlog/${blog.id}`}>
+                          <div
+                            className="blog-text"
+                            dangerouslySetInnerHTML={{
+                              __html: blog.description.slice(0, 30),
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <a href={`/EditPost/${blog.id}`}>
                             <i className="fas fa-edit me-2"></i>
                           </a>
                           <i

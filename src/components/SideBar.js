@@ -26,31 +26,31 @@ const SideBar = () => {
           <i className="fa fa-home me-2"></i>Home
         </a>
         <a
-          href="/Posts"
+          href="/Post"
           className="list-group-item list-group-item-action jingga fw-bold"
         >
-          <i className="fas fa-pencil-alt me-2"></i>Posts
+          <i className="fas fa-pencil-alt me-2"></i>Post
         </a>
         <a
-          href="/Categories"
+          href="/Category"
           className="list-group-item list-group-item-action jingga fw-bold"
         >
-          <i className="fas fa-folder me-2"></i>Categories
+          <i className="fas fa-folder me-2"></i>Category
         </a>
         <a
-          href="/Comments"
+          href="/Comment"
           className="list-group-item list-group-item-action jingga fw-bold"
         >
-          <i className="fas fa-comment-dots me-2"></i>Comments
+          <i className="fas fa-comment-dots me-2"></i>Comment
         </a>
         {/* <a
-          href="/AddBlog"
+          href="/AddPost"
           className="list-group-item list-group-item-action jingga fw-bold"
         >
           <i className="fas fa-plus-circle me-2"></i>Add Blog
         </a> */}
         {/* <a
-          href="/AddCategories"
+          href="/AddCategory"
           className="list-group-item list-group-item-action jingga fw-bold"
         >
           <i className="fas fa-plus-circle me-2"></i>Add Categories
