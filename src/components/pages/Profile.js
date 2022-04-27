@@ -24,6 +24,7 @@ const Profile = () => {
 
   useEffect(() => {
     refreshToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refreshToken = async () => {
@@ -74,6 +75,7 @@ const Profile = () => {
                   <div className="m-t-30 center text-center">
                     <img
                       src="https://wwbmmc.ca/wp-content/uploads/2020/12/kisspng-computer-icons-avatar-icon-design-male-teacher-5ade176c636ed2.2763610715245044284073.png"
+                      alt=""
                       className="rounded-circle"
                       width="200"
                     />
@@ -94,15 +96,9 @@ const Profile = () => {
                   <h6>Semarang</h6>
                   <hr />
                   <div className="text-center">
-                    <a>
-                      <i className="fab fa-facebook-f fs-4 me-5"></i>
-                    </a>
-                    <a>
-                      <i className="fab fa-twitter fs-4 me-5"></i>
-                    </a>
-                    <a>
-                      <i className="fab fa-youtube fs-4"></i>
-                    </a>
+                    <i className="fab fa-facebook-f fs-4 me-5"></i>
+                    <i className="fab fa-twitter fs-4 me-5"></i>
+                    <i className="fab fa-youtube fs-4"></i>
                   </div>
                 </div>
               </div>

@@ -19,17 +19,20 @@ const Home = () => {
   const [post, setPost] = useState([]);
   const [comment, setComment] = useState([]);
   const [category, setCategory] = useState([]);
+  const [users, setUsers] = useState([]);
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
-  const [, setUsers] = useState([]);
+  // const [, setUsers] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
     getAllPost();
     getAllComment();
     getAllCategory();
+    getAllUser();
     refreshToken();
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getAllPost = async () => {
@@ -43,6 +46,10 @@ const Home = () => {
   const getAllCategory = async () => {
     const category = await axios.get("http://localhost:2020/api/category/");
     setCategory(category.data);
+  };
+  const getAllUser = async () => {
+    const users = await axios.get("http://localhost:2020/api/users/users");
+    setUsers(users.data);
   };
 
   const deletePost = async (id) => {
@@ -105,71 +112,15 @@ const Home = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
-          <ul class="breadcrumb">
+          <ul className="breadcrumb">
             <li>
               <i className="fa fa-home me-2"></i>Home
             </li>
           </ul>
-          <div className="row g-2">
-            <div className="col-md-9">
-              <div className="card">
-                <div className="card-body">
-                  <div className="card-title text-center">
-                    <h4>Post Terbaru</h4>
-                    <hr />
-                  </div>
-                  <div className="table-responsive">
-                    <table className="table text-center">
-                      <thead>
-                        <tr>
-                          <th>No</th>
-                          <th>Nama</th>
-                          <th>Judul</th>
-                          <th>Gambar</th>
-                          <th>Konten</th>
-                          <th>Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {post.map((blog, index) => (
-                          <tr key={blog.id}>
-                            <td>{index + 1}</td>
-                            <td>{blog.name}</td>
-                            <td>{blog.title.slice(0, 10)}..</td>
-                            <td>
-                              <img
-                                src={`http://localhost:2020/${blog.image}`}
-                                width="100"
-                                alt=""
-                              />
-                            </td>
-                            <td>
-                              <div
-                                className="blog-text"
-                                dangerouslySetInnerHTML={{
-                                  __html: blog.description.slice(0, 30),
-                                }}
-                              />
-                            </td>
-                            <td>
-                              <a href={`/EditPost/${blog.id}`}>
-                                <i className="fas fa-edit me-2"></i>
-                              </a>
-                              <i
-                                className="fa fa-trash text-danger"
-                                aria-hidden="true"
-                                onClick={() => deletePost(blog.id)}
-                              ></i>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3">
+          {/* <div className="row g-2"> */}
+          {/* <div className="col-md-9"> */}
+          <div className="row">
+            <div className="col-lg-3 col-sm-6">
               <div className="card text-center backgroud mb-3">
                 <div className="card-body">
                   <h3>Post</h3>
@@ -178,6 +129,8 @@ const Home = () => {
                   </h4>
                 </div>
               </div>
+            </div>
+            <div className="col-lg-3 col-sm-6">
               <div className="card text-center backgroud mb-3">
                 <div className="card-body">
                   <h3>Category</h3>
@@ -186,6 +139,8 @@ const Home = () => {
                   </h4>
                 </div>
               </div>
+            </div>
+            <div className="col-lg-3 col-sm-6">
               <div className="card text-center backgroud mb-3">
                 <div className="card-body">
                   <h3>Comment</h3>
@@ -195,8 +150,75 @@ const Home = () => {
                 </div>
               </div>
             </div>
+            <div className="col-lg-3 col-sm-6">
+              <div className="card text-center backgroud mb-3">
+                <div className="card-body">
+                  <h3>User</h3>
+                  <h4 className="display-4 fw-bold">
+                    <i className="fas fa-user"></i> {users.length}
+                  </h4>
+                </div>
+              </div>
+            </div>
           </div>
+          <div className="card">
+            <div className="card-body">
+              <div className="card-title text-center">
+                <h4>Post Terbaru</h4>
+                <hr />
+              </div>
+              <div className="table-responsive">
+                <table className="table text-center">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Gambar</th>
+                      <th>Nama</th>
+                      <th>Judul</th>
+                      <th>Konten</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {post.map((blog, index) => (
+                      <tr key={blog.id}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <img
+                            src={`http://localhost:2020/${blog.image}`}
+                            width="100"
+                            alt=""
+                          />
+                        </td>
+                        <td>{blog.name}</td>
+                        <td>{blog.title}</td>
+                        <td>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: blog.description.slice(0, 70),
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <a href={`/EditPost/${blog.id}`}>
+                            <i className="fas fa-edit me-2"></i>
+                          </a>
+                          <i
+                            className="fa fa-trash text-danger"
+                            aria-hidden="true"
+                            onClick={() => deletePost(blog.id)}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {/* </div> */}
         </div>
+        {/* </div> */}
       </div>
     </div>
   );

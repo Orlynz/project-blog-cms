@@ -35,6 +35,7 @@ const EditCategories = () => {
     getDataById();
     refreshToken();
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const updateHandler = async (e) => {
@@ -103,7 +104,7 @@ const EditCategories = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
-          <ul class="breadcrumb">
+          <ul className="breadcrumb">
             <li>
               <a href="/Home">
                 <i className="fa fa-home me-2"></i>Home
@@ -164,7 +165,7 @@ const EditCategories = () => {
                   type="submit"
                 >
                   <strong>
-                    SIMPAN <i class="fa fa-save"></i>
+                    SIMPAN <i className="fa fa-save"></i>
                   </strong>
                 </Button>
               </Col>

@@ -19,32 +19,7 @@ const Edit = (props) => {
 
   useEffect(() => {
     viewPostId(props.match.params.postID);
-    refreshToken();
-    getUsers();
-  }, []);
-
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
-  const [, setUsers] = useState([]);
-  const [ispostId, setpostId] = useState([]);
-  const history = useHistory();
-
-  const viewPostId = async (ids) => {
-    try {
-      await axios
-        .post(`http://localhost:2020/getPostId`, {
-          ids: props.match.params.postID,
-        })
-        .then((res) => {
-          if (res.data.success === true) {
-            setpostId(res.data.listId);
-          }
-        });
-    } catch (error) {
-      throw error;
-    }
-  };
-
+    
   const refreshToken = async () => {
     try {
       const response = await axios.get("http://localhost:2020/api/users/token");
@@ -91,6 +66,33 @@ const Edit = (props) => {
       }
     );
     setUsers(response.data);
+  };
+
+    refreshToken();
+    getUsers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+  const [, setUsers] = useState([]);
+  const [ispostId, setpostId] = useState([]);
+  const history = useHistory();
+
+  const viewPostId = async (ids) => {
+    try {
+      await axios
+        .post(`http://localhost:2020/getPostId`, {
+          ids: props.match.params.postID,
+        })
+        .then((res) => {
+          if (res.data.success === true) {
+            setpostId(res.data.listId);
+          }
+        });
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (

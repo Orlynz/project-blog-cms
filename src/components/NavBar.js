@@ -23,20 +23,12 @@ const NavBar = () => {
       }
     }
   };
-  window.addEventListener("DOMContentLoaded", (event) => {
-    const sidebarToggle = document.body.querySelector("#sidebarToggle");
-    if (sidebarToggle) {
-      sidebarToggle.addEventListener("click", (event) => {
-        event.preventDefault();
-        document.body.classList.toggle("sidebar-toggle");
-      });
-    }
-  });
+  
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
         <div className="d-flex align-items-center">
-          <i class="fas fa-align-left fs-4 me-3" id="sidebarToggle"></i>
+          <i className="fas fa-align-left fs-4 me-3" id="sidebarToggle"></i>
         </div>
         <button
           className="navbar-toggler"

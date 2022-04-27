@@ -8,6 +8,7 @@ import { Button } from "react-bootstrap";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
+import Swal from "sweetalert2";
 
 const Posts = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -30,6 +31,7 @@ const Posts = () => {
     getAllPost();
     refreshToken();
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refreshToken = async () => {
@@ -86,9 +88,25 @@ const Posts = () => {
   };
 
   const deletePost = async (id) => {
-    await axios.delete(`http://localhost:2020/api/post/${id}`);
+    // e.preventDefault();
+    Swal.fire({
+      title: "Apakah anda ingin menghapus Post?",
+      icon: "warning",
+      showDenyButton: true,
+      confirmButtonText: "Hapus",
+      denyButtonText: `Batal`,
+    }).then(async (result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        await axios.delete(`http://localhost:2020/api/post/${id}`);
+        Swal.fire("Terhapus!", "Berhasil menghapus Postingan anda", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Dibatalkan!", "", "error");
+      }
+    });
     getAllPost();
   };
+
   $(document).ready(function () {
     setTimeout(function () {
       $("#example").DataTable();
@@ -101,7 +119,7 @@ const Posts = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
-          <ul class="breadcrumb">
+          <ul className="breadcrumb">
             <li>
               <a href="/Home">
                 <i className="fa fa-home me-2"></i>Home
@@ -161,12 +179,11 @@ const Posts = () => {
                           />
                         </td>
                         <td>{blog.name}</td>
-                        <td>{blog.title.slice(0, 15)}..</td>
+                        <td>{blog.title}</td>
                         <td>
                           <div
-                            className="blog-text"
                             dangerouslySetInnerHTML={{
-                              __html: blog.description.slice(0, 30),
+                              __html: blog.description.slice(0, 70),
                             }}
                           />
                         </td>

@@ -24,6 +24,8 @@
     "react-draft-wysiwyg": "^1.14.7",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.0",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.4.9",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

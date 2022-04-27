@@ -56,6 +56,7 @@ const SideBar = () => {
           <i className="fas fa-plus-circle me-2"></i>Add Categories
         </a> */}
         <a
+          href="#/"
           onClick={Logout}
           className="list-group-item list-group-item-action merah fw-bold"
         >

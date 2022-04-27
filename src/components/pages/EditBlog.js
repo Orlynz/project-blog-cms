@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 import { Card, Form, Col, Button, Row } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const AddBlog = (props) => {
   let history = useHistory();
@@ -36,29 +37,39 @@ const AddBlog = (props) => {
   };
 
   const PoemAddbooks = async (event) => {
-    try {
-      event.preventDefault();
-      event.persist();
-      axios
-        .post(`http://localhost:2020/editPost`, {
-          title: userInfo.title,
-          name: userInfo.name,
-          description: userInfo.description.value,
-          ids: props.editPostID,
-        })
-        .then((res) => {
-          if (res.data.success === true) {
-            history.push("/Post");
-          }
-        });
-    } catch (error) {
-      throw error;
-    }
+    Swal.fire({
+      title: "Apakah anda ingin menyimpan perubahan?",
+      icon: "question",
+      showDenyButton: true,
+      confirmButtonText: "Simpan",
+      denyButtonText: `Batal`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        axios
+          .post(`http://localhost:2020/editPost`, {
+            title: userInfo.title,
+            name: userInfo.name,
+            description: userInfo.description.value,
+            ids: props.editPostID,
+          })
+          .then((res) => {
+            if (res.data.success === true) {
+              history.push("/Post");
+            }
+          });
+        Swal.fire("Tersimpan!", "Postingan anda berhasil diubah.", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Perubahan tidak disimpan!", "", "info");
+      }
+    });
+    event.preventDefault();
+    event.persist();
   };
 
   return (
     <div className="container pb-4">
-      <ul class="breadcrumb">
+      <ul className="breadcrumb">
         <li>
           <a href="/Home">
             <i className="fa fa-home me-2"></i>Home
@@ -180,7 +191,7 @@ const AddBlog = (props) => {
               type="submit"
             >
               <strong>
-                SIMPAN <i class="fa fa-save"></i>
+                SIMPAN <i className="fa fa-save"></i>
               </strong>
             </Button>
           </Col>

@@ -37,6 +37,7 @@ const AddCategories = () => {
   useEffect(() => {
     refreshToken();
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refreshToken = async () => {
@@ -94,7 +95,7 @@ const AddCategories = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container-fluid pb-4">
-          <ul class="breadcrumb">
+          <ul className="breadcrumb">
             <li>
               <a href="/Home">
                 <i className="fa fa-home me-2"></i>Home
@@ -148,7 +149,7 @@ const AddCategories = () => {
                   type="submit"
                 >
                   <strong>
-                    SIMPAN <i class="fa fa-save"></i>
+                    SIMPAN <i className="fa fa-save"></i>
                   </strong>
                 </Button>
               </Col>

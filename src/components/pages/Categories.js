@@ -27,6 +27,7 @@ const Categories = () => {
     getAllCategory();
     refreshToken();
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getAllCategory = async () => {
@@ -94,7 +95,7 @@ const Categories = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
-          <ul class="breadcrumb">
+          <ul className="breadcrumb">
             <li>
               <a href="/Home">
                 <i className="fa fa-home me-2"></i>Home

@@ -9,6 +9,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import Swal from "sweetalert2";
 
 const AddBlog = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -52,13 +53,26 @@ const AddBlog = () => {
     formData.append("name", name);
     formData.append("description", userInfo.description.value);
 
-    axios.post(`http://localhost:2020/api/post/`, formData);
+    axios.post(`http://localhost:2020/api/post/`, formData).then((res) => {
+      Swal.fire({
+        title: "Tersimpan!",
+        text: "Sukses menambahkan Post",
+        icon: "success",
+        backdrop: `
+          rgba(0,0,123,0.4)
+          url("https://sweetalert2.github.io/images/nyan-cat.gif")
+          left top
+          no-repeat
+        `,
+      });
+    });
     history.push("/Post");
   };
 
   useEffect(() => {
     refreshToken();
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refreshToken = async () => {
@@ -116,7 +130,7 @@ const AddBlog = () => {
         <NavBar />
         {/* Page Konten */}
         <div className="container pb-4">
-          <ul class="breadcrumb">
+          <ul className="breadcrumb">
             <li>
               <a href="/Home">
                 <i className="fa fa-home me-2"></i>Home
@@ -262,7 +276,7 @@ const AddBlog = () => {
                   type="submit"
                 >
                   <strong>
-                    SIMPAN <i class="fa fa-save"></i>
+                    SIMPAN <i className="fa fa-save"></i>
                   </strong>
                 </Button>
               </Col>
