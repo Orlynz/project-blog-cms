@@ -5,6 +5,7 @@ import { Card, Form, Col, Button, Row } from "react-bootstrap";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
 import jwt_decode from "jwt-decode";
+import Swal from "sweetalert2";
 
 const EditCategories = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -40,13 +41,27 @@ const EditCategories = () => {
 
   const updateHandler = async (e) => {
     e.preventDefault();
-
+    e.persist();
     const data = {
       name: name,
     };
 
-    await axios.put(`http://localhost:2020/api/category/${id}`, data);
-    history.push("/Category");
+    Swal.fire({
+      title: "Apakah anda ingin menyimpan perubahan?",
+      icon: "question",
+      showDenyButton: true,
+      confirmButtonText: "Simpan",
+      denyButtonText: `Batal`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        axios.put(`http://localhost:2020/api/category/${id}`, data);
+        history.push("/Category");
+        Swal.fire("Tersimpan!", "Kategori berhasil diubah.", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Perubahan tidak disimpan!", "", "info");
+      }
+    });
   };
 
   const refreshToken = async () => {

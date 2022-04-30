@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
+import Swal from "sweetalert2";
 
 const Home = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -53,7 +54,21 @@ const Home = () => {
   };
 
   const deletePost = async (id) => {
-    await axios.delete(`http://localhost:2020/api/post/${id}`);
+    Swal.fire({
+      title: "Apakah anda ingin menghapus Post?",
+      icon: "warning",
+      showDenyButton: true,
+      confirmButtonText: "Hapus",
+      denyButtonText: `Batal`,
+    }).then(async (result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        await axios.delete(`http://localhost:2020/api/post/${id}`);
+        Swal.fire("Terhapus!", "Berhasil menghapus Postingan anda", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Dibatalkan!", "", "error");
+      }
+    });
     getAllPost();
   };
 

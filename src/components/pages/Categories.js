@@ -5,6 +5,7 @@ import axios from "axios";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
 import { Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const Categories = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -36,8 +37,22 @@ const Categories = () => {
   };
 
   const deleteCategory = async (id) => {
-    await axios.delete(`http://localhost:2020/api/category/${id}`);
     getAllCategory();
+    Swal.fire({
+      title: "Apakah anda ingin menghapus Kategori?",
+      icon: "warning",
+      showDenyButton: true,
+      confirmButtonText: "Hapus",
+      denyButtonText: `Batal`,
+    }).then(async (result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        await axios.delete(`http://localhost:2020/api/category/${id}`);
+        Swal.fire("Terhapus!", "Berhasil menghapus Kategori", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Dibatalkan!", "", "error");
+      }
+    });
   };
 
   const refreshToken = async () => {

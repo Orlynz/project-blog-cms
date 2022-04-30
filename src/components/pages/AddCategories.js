@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import SideBar from "../SideBar.js";
 import NavBar from "../NavBar.js";
 import { Card, Form, Col, Button, Row } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const AddCategories = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -30,7 +31,15 @@ const AddCategories = () => {
       name: name,
     };
 
-    await axios.post(`http://localhost:2020/api/category/`, category);
+    await axios
+      .post(`http://localhost:2020/api/category/`, category)
+      .then((res) => {
+        Swal.fire({
+          title: "Tersimpan!",
+          text: "Sukses menambahkan Kategori",
+          icon: "success",
+        });
+      });
     history.push("/Category");
   };
 

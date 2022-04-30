@@ -114,6 +114,7 @@ const AddBlog = (props) => {
                 type="text"
                 placeholder="Nama mu..."
                 required
+                name="name"
                 value={userInfo.name}
                 onChange={onChangeValue}
               />
@@ -132,6 +133,7 @@ const AddBlog = (props) => {
                 type="text"
                 placeholder="Judul Blog..."
                 required
+                name="title"
                 value={userInfo.title}
                 onChange={onChangeValue}
               />

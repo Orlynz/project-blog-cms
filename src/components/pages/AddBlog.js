@@ -36,10 +36,10 @@ const AddBlog = () => {
   };
   const [title, setTitle] = useState("");
   const [name, setName] = useState("");
-  // const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  // const [category, setCategory] = useState([]);
   const [, setUsers] = useState([]);
   const history = useHistory();
 
@@ -69,8 +69,14 @@ const AddBlog = () => {
     history.push("/Post");
   };
 
+  // const getAllCategory = async () => {
+  //   const category = await axios.get("http://localhost:2020/api/category/");
+  //   setCategory(category.data);
+  // };
+
   useEffect(() => {
     refreshToken();
+    // getAllCategory();
     getUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -205,9 +211,14 @@ const AddBlog = () => {
                 <Col sm="10">
                   <Form.Select name="category" required>
                     <option disabled>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    {category.map((categories) => (
+                      <option
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                      >
+                        {categories.name}
+                      </option>
+                    ))}
                   </Form.Select>
                 </Col>
               </Form.Group> */}
