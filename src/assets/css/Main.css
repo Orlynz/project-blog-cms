@@ -51,7 +51,7 @@ body {
   border: none;
 } */
 
-.bungkus {
+.wrapper {
   overflow-x: hidden;
 }
 
@@ -70,11 +70,11 @@ body {
   width: 240px;
 }
 
-.konten-bungkus {
+.content-wrapper {
   min-width: 100vw;
 }
 
-body.sidebar-toggle .bungkus .sidebar {
+body.sidebar-toggle .wrapper .sidebar {
   margin-left: 0;
 }
 
@@ -83,12 +83,12 @@ body.sidebar-toggle .bungkus .sidebar {
     margin-left: 0;
   }
 
-  .konten-bungkus {
+  .content-wrapper {
     min-width: 0;
     width: 100%;
   }
 
-  body.sidebar-toggle .bungkus .sidebar {
+  body.sidebar-toggle .wrapper .sidebar {
     margin-left: -15rem;
   }
 }

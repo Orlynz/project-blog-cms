@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
+import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { Card, Form, Col, Button, Row } from "react-bootstrap";
-import SideBar from "../SideBar.js";
-import NavBar from "../NavBar.js";
+import { Card, Form, Col, Button, Row, Container } from "react-bootstrap";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Swal from "sweetalert2";
+import { Navbar, Sidebar } from "../components";
 
 const AddBlog = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -21,26 +19,16 @@ const AddBlog = () => {
       });
     }
   });
-  const [userInfo] = useState({});
-  // const onChangeValue = (e) => {
-  //   setuserInfo({
-  //     ...userInfo,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
 
   let editorState = EditorState.createEmpty();
   const [description, setDescription] = useState(editorState);
   const onEditorStateChange = (editorState) => {
     setDescription(editorState);
   };
+  const [userInfo] = useState({});
   const [title, setTitle] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
-  // const [category, setCategory] = useState([]);
-  const [, setUsers] = useState([]);
   const history = useHistory();
 
   const addProductHandler = async (e) => {
@@ -58,84 +46,17 @@ const AddBlog = () => {
         title: "Tersimpan!",
         text: "Sukses menambahkan Post",
         icon: "success",
-        backdrop: `
-          rgba(0,0,123,0.4)
-          url("https://sweetalert2.github.io/images/nyan-cat.gif")
-          left top
-          no-repeat
-        `,
       });
     });
     history.push("/Post");
   };
 
-  // const getAllCategory = async () => {
-  //   const category = await axios.get("http://localhost:2020/api/category/");
-  //   setCategory(category.data);
-  // };
-
-  useEffect(() => {
-    refreshToken();
-    // getAllCategory();
-    getUsers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const refreshToken = async () => {
-    try {
-      const response = await axios.get("http://localhost:2020/api/users/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      // setName(decoded.name);
-      setExpire(decoded.exp);
-    } catch (error) {
-      if (error.response) {
-        history.push("/");
-      }
-    }
-  };
-
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get(
-          "http://localhost:2020/api/users/token"
-        );
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        // setName(decoded.name);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  const getUsers = async () => {
-    const response = await axiosJWT.get(
-      "http://localhost:2020/api/users/users",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    setUsers(response.data);
-  };
-
   return (
-    <div className="d-flex bungkus">
-      <SideBar />
-      <div className="konten-bungkus">
-        <NavBar />
-        {/* Page Konten */}
-        <div className="container pb-4">
+    <div className="d-flex wrapper">
+      <Sidebar />
+      <div className="content-wrapper">
+        <Navbar />
+        <Container className="pb-4">
           <ul className="breadcrumb">
             <li>
               <a href="/Home">
@@ -151,24 +72,18 @@ const AddBlog = () => {
               <i className="fas fa-plus-circle me-2"></i>Add Post
             </li>
           </ul>
-          <Card className="card">
-            <div className="card-header">
+          <Card>
+            <Card.Header>
               <h4>Add Blog</h4>
-            </div>
+            </Card.Header>
 
             <Form
-              style={{
-                padding: "10px",
-              }}
+              className="p-2"
               onSubmit={addProductHandler}
               method="POST"
               encType="multipart/form-data"
             >
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
+              <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
                   Nama
                 </Form.Label>
@@ -182,11 +97,7 @@ const AddBlog = () => {
                   />
                 </Col>
               </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
+              <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
                   Judul Blog
                 </Form.Label>
@@ -222,11 +133,7 @@ const AddBlog = () => {
                   </Form.Select>
                 </Col>
               </Form.Group> */}
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
+              <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
                   Upload Foto
                 </Form.Label>
@@ -239,11 +146,7 @@ const AddBlog = () => {
                   />
                 </Col>
               </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
+              <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
                   Isi Konten
                 </Form.Label>
@@ -266,7 +169,7 @@ const AddBlog = () => {
                     onEditorStateChange={onEditorStateChange}
                   />
                   <textarea
-                    style={{ display: "none" }}
+                    className="d-none"
                     disabled
                     ref={(val) => (userInfo.description = val)}
                     value={draftToHtml(
@@ -279,21 +182,15 @@ const AddBlog = () => {
               <Col>
                 <Button
                   variant="outline-dark"
-                  style={{
-                    padding: "5px",
-                    borderRadius: "10px",
-                    float: "right",
-                  }}
+                  className="p-2 float-end fw-bold"
                   type="submit"
                 >
-                  <strong>
-                    SIMPAN <i className="fa fa-save"></i>
-                  </strong>
+                  SIMPAN <i className="fa fa-save"></i>
                 </Button>
               </Col>
             </Form>
           </Card>
-        </div>
+        </Container>
       </div>
     </div>
   );

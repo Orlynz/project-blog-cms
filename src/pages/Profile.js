@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
-import SideBar from "../SideBar.js";
-import NavBar from "../NavBar.js";
+import { Navbar, Sidebar } from "../components";
 
 const Profile = () => {
   window.addEventListener("DOMContentLoaded", (event) => {
@@ -63,10 +62,10 @@ const Profile = () => {
     }
   );
   return (
-    <div className="d-flex bungkus">
-      <SideBar />
-      <div className="konten-bungkus">
-        <NavBar />
+    <div className="d-flex wrapper">
+      <Sidebar />
+      <div className="content-wrapper">
+        <Navbar />
         <div className="container pb-4">
           <div className="row g-2">
             <div className="col-lg-4 col-xlg-3 col-md-5">
@@ -125,9 +124,7 @@ const Profile = () => {
                       </div>
                     </div>
                     <div className="form-group pb-2">
-                      <label for="example-email" className="col-md-12">
-                        Email
-                      </label>
+                      <label className="col-md-12">Email</label>
                       <div className="col-md-12">
                         <input
                           type="email"

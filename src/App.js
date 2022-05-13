@@ -13,8 +13,9 @@ import {
   Register,
   Login,
   Profile,
-} from "./components/pages";
+} from "./pages";
 import "./assets/css/Main.css";
+
 function App() {
   return (
     <BrowserRouter>

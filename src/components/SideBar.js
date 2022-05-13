@@ -1,16 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+
 const SideBar = () => {
   const history = useHistory();
 
   const Logout = async () => {
-    try {
-      await axios.delete("http://localhost:2020/api/users/logout");
-      history.push("/");
-    } catch (error) {
-      console.log(error);
-    }
+    await axios.delete("http://localhost:2020/api/users/logout");
+    history.push("/");
   };
 
   return (
@@ -43,18 +40,6 @@ const SideBar = () => {
         >
           <i className="fas fa-comment-dots me-2"></i>Comment
         </a>
-        {/* <a
-          href="/AddPost"
-          className="list-group-item list-group-item-action jingga fw-bold"
-        >
-          <i className="fas fa-plus-circle me-2"></i>Add Blog
-        </a> */}
-        {/* <a
-          href="/AddCategory"
-          className="list-group-item list-group-item-action jingga fw-bold"
-        >
-          <i className="fas fa-plus-circle me-2"></i>Add Categories
-        </a> */}
         <a
           href="#/"
           onClick={Logout}
