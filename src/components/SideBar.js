@@ -1,13 +1,26 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { API_URL } from "../utils/constans";
 
 const SideBar = () => {
   const history = useHistory();
 
   const Logout = async () => {
-    await axios.delete("http://localhost:2020/api/users/logout");
-    history.push("/");
+    await Swal.fire({
+      title: "Apakah anda yakin ingin keluar?",
+      icon: "warning",
+      showDenyButton: true,
+      confirmButtonText: "Keluar",
+      denyButtonText: `Batal`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(API_URL + "/api/users/logout");
+        Swal.fire("Terhapus!", "Berhasil keluar", "success");
+        history.push("/");
+      }
+    });
   };
 
   return (

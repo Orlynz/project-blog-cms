@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Card, Container, Table } from "react-bootstrap";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import $ from "jquery";
 import Swal from "sweetalert2";
 import { Navbar, Sidebar } from "../components";
+import { API_URL } from "../utils/constans";
 
-const Categories = () => {
-  window.addEventListener("DOMContentLoaded", (event) => {
+const Posts = () => {
+  window.addEventListener("DOMContentLoaded", () => {
     const sidebarToggle = document.body.querySelector("#sidebarToggle");
     if (sidebarToggle) {
       sidebarToggle.addEventListener("click", (event) => {
@@ -15,34 +19,39 @@ const Categories = () => {
     }
   });
 
-  const [category, setCategory] = useState([]);
+  $(document).ready(function () {
+    setTimeout(function () {
+      $("#example").DataTable();
+    }, 1000);
+  });
 
-  const getAllCategory = async () => {
-    const category = await axios.get("http://localhost:2020/api/category/");
-    setCategory(category.data);
+  const [post, setPost] = useState([]);
+
+  const getAllPost = async () => {
+    const posts = await axios.get(API_URL + "/api/post/");
+    setPost(posts.data);
   };
 
-  const deleteCategory = async (id) => {
-    getAllCategory();
-    Swal.fire({
-      title: "Apakah anda ingin menghapus Kategori?",
+  const deletePost = async (id) => {
+    await Swal.fire({
+      title: "Apakah anda ingin menghapus Post?",
       icon: "warning",
       showDenyButton: true,
       confirmButtonText: "Hapus",
       denyButtonText: `Batal`,
-    }).then(async (result) => {
-      /* Read more about isConfirmed, isDenied below */
+    }).then((result) => {
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:2020/api/category/${id}`);
-        Swal.fire("Terhapus!", "Berhasil menghapus Kategori", "success");
+        axios.delete(API_URL + `/api/post/${id}`);
+        Swal.fire("Terhapus!", "Berhasil menghapus Postingan anda", "success");
       } else if (result.isDenied) {
         Swal.fire("Dibatalkan!", "", "error");
       }
     });
+    getAllPost();
   };
 
   useEffect(() => {
-    getAllCategory();
+    getAllPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -59,47 +68,65 @@ const Categories = () => {
               </a>
             </li>
             <li>
-              <i className="fas fa-folder me-2"></i>Category
+              <i className="fas fa-pencil-alt me-2"></i>Post
             </li>
           </ul>
           <Card>
             <Card.Body>
               <Card.Title>
-                <h4 className="float-start">All Category</h4>
+                <h4 className="float-start pt-1">Post</h4>
                 <Button
-                  href="/AddCategory"
+                  href="/AddPost"
                   variant="outline-dark"
-                  className="fw-bold float-end"
                   type="submit"
+                  className="fw-bold float-end"
                 >
-                  <i className="fas fa-plus-circle me-2"></i>ADD CATEGORY
+                  <i className="fas fa-plus-circle me-2"></i>ADD POST
                 </Button>
               </Card.Title>
             </Card.Body>
           </Card>
           <Card>
             <Card.Body>
-              <Table responsive className="text-center">
+              <Table responsive id="example" className="text-center">
                 <thead>
                   <tr>
                     <th>No</th>
+                    <th>Gambar</th>
+                    <th>Nama</th>
                     <th>Judul</th>
-                    <th>Details</th>
+                    <th>Konten</th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {category.map((categories, index) => (
-                    <tr key={categories.id}>
+                  {post.map((blog, index) => (
+                    <tr key={blog.id}>
                       <td>{index + 1}</td>
-                      <td>{categories.name}</td>
                       <td>
-                        <a href={`/EditCategory/${categories.id}`}>
+                        <img
+                          src={API_URL + `/${blog.image}`}
+                          width="100"
+                          alt=""
+                        />
+                      </td>
+                      <td>{blog.name}</td>
+                      <td>{blog.title}</td>
+                      <td>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: blog.description.slice(0, 70),
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <a href={`/EditPost/${blog.id}`}>
                           <i className="fas fa-edit me-2"></i>
                         </a>
                         <i
                           className="fa fa-trash text-danger"
                           aria-hidden="true"
-                          onClick={() => deleteCategory(categories.id)}
+                          onClick={() => deletePost(blog.id)}
                         ></i>
                       </td>
                     </tr>
@@ -113,5 +140,4 @@ const Categories = () => {
     </div>
   );
 };
-
-export default Categories;
+export default Posts;

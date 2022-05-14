@@ -35,22 +35,6 @@ body {
   color: white;
 }
 
-/* .list-group-item.active {
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
-  background-image: linear-gradient(
-    to left,
-    orange,
-    rgb(255, 172, 19),
-    rgb(255, 177, 32),
-    rgb(255, 179, 38),
-    rgb(255, 184, 52)
-  );
-  color: white;
-  font-weight: bold;
-  border: none;
-} */
-
 .wrapper {
   overflow-x: hidden;
 }
@@ -167,11 +151,7 @@ a {
   width: 100%;
   background: white;
 }
-/* #container .form-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-} */
+
 .form-content .login-form,
 .form-content .signup-form {
   width: calc(100% / 2 - 25px);

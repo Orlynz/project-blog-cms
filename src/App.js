@@ -3,16 +3,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "jquery/dist/jquery.min.js";
 import {
   Home,
-  Posts,
-  Categories,
-  Comments,
-  AddBlog,
-  AddCategories,
-  EditBlog,
-  EditCategories,
+  Post,
+  Category,
+  Comment,
+  AddPost,
+  AddCategory,
+  EditPost,
+  EditCategory,
   Register,
   Login,
-  Profile,
 } from "./pages";
 import "./assets/css/Main.css";
 
@@ -25,26 +24,23 @@ function App() {
             <Home />
           </Route>
           <Route path="/Post" exact>
-            <Posts />
+            <Post />
           </Route>
           <Route path="/Category" exact>
-            <Categories />
+            <Category />
           </Route>
           <Route path="/Comment" exact>
-            <Comments />
+            <Comment />
           </Route>
           <Route path="/AddCategory" exact>
-            <AddCategories />
+            <AddCategory />
           </Route>
           <Route path="/AddPost" exact>
-            <AddBlog />
+            <AddPost />
           </Route>
-          <Route path="/EditPost/:postID" exact component={EditBlog} />
+          <Route path="/EditPost/:postID" exact component={EditPost} />
           <Route path="/EditCategory/:id" exact>
-            <EditCategories />
-          </Route>
-          <Route path="/Profile" exact>
-            <Profile />
+            <EditCategory />
           </Route>
           <Route path="/Register" exact>
             <Register />

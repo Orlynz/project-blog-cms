@@ -1,25 +1,23 @@
 import Home from "./Home";
-import Posts from "./Posts";
-import Categories from "./Categories";
-import Comments from "./Comments";
-import AddBlog from "./AddBlog";
-import AddCategories from "./AddCategories";
-import EditBlog from "./Edit";
-import EditCategories from "./EditCategories";
-import Profile from "./Profile";
+import Post from "./Post";
+import Category from "./Category";
+import Comment from "./Comment";
+import AddPost from "./AddPost";
+import AddCategory from "./AddCategory";
+import EditPost from "./EditPost";
+import EditCategory from "./EditCategory";
 import Login from "./Login";
 import Register from "./Register";
 
 export {
   Home,
-  Posts,
-  Categories,
-  Comments,
-  AddBlog,
-  AddCategories,
-  EditBlog,
-  EditCategories,
-  Profile,
+  Post,
+  Category,
+  Comment,
+  AddPost,
+  AddCategory,
+  EditPost,
+  EditCategory,
   Login,
   Register,
 };

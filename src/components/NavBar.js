@@ -3,6 +3,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { API_URL } from "../utils/constans";
 
 const NavBar = () => {
   const [name, setName] = useState("");
@@ -11,9 +12,7 @@ const NavBar = () => {
   useEffect(() => {
     const refreshToken = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:2020/api/users/token"
-        );
+        const response = await axios.get(API_URL + "/api/users/token");
         const decoded = jwt_decode(response.data.accessToken);
         setName(decoded.name);
       } catch (error) {
@@ -39,7 +38,7 @@ const NavBar = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto"></Nav>
           <Nav>
-            <Nav.Link className="fw-bold text-black" href="/Profile">
+            <Nav.Link className="fw-bold text-black">
               <i className="fas fa-user me-2"></i>
               {name}
             </Nav.Link>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import image from "../assets/images/6343825.jpg";
 import { useHistory } from "react-router-dom";
+import { API_URL } from "../utils/constans";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const Login = () => {
     };
 
     try {
-      await axios.post("http://localhost:2020/api/users/login", data);
+      await axios.post(API_URL + "/api/users/login", data);
       history.push("/Home");
     } catch (err) {
       if (err.response) {

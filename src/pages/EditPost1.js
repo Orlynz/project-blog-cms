@@ -12,6 +12,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 import { Card, Form, Col, Button, Row, Container } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { API_URL } from "../utils/constans";
 
 const AddBlog = (props) => {
   const history = useHistory();
@@ -46,10 +47,9 @@ const AddBlog = (props) => {
       confirmButtonText: "Simpan",
       denyButtonText: `Batal`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         axios
-          .post(`http://localhost:2020/editPost`, {
+          .post(API_URL + `/editPost`, {
             title: userInfo.title,
             name: userInfo.name,
             description: userInfo.description.value,

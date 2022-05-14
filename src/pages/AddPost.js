@@ -8,9 +8,10 @@ import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Swal from "sweetalert2";
 import { Navbar, Sidebar } from "../components";
+import { API_URL } from "../utils/constans";
 
 const AddBlog = () => {
-  window.addEventListener("DOMContentLoaded", (event) => {
+  window.addEventListener("DOMContentLoaded", () => {
     const sidebarToggle = document.body.querySelector("#sidebarToggle");
     if (sidebarToggle) {
       sidebarToggle.addEventListener("click", (event) => {
@@ -31,7 +32,7 @@ const AddBlog = () => {
   const [image, setImage] = useState("");
   const history = useHistory();
 
-  const addProductHandler = async (e) => {
+  const addPost = async (e) => {
     e.preventDefault();
     e.persist();
     const formData = new FormData();
@@ -41,7 +42,7 @@ const AddBlog = () => {
     formData.append("name", name);
     formData.append("description", userInfo.description.value);
 
-    axios.post(`http://localhost:2020/api/post/`, formData).then((res) => {
+    await axios.post(API_URL + `/api/post/`, formData).then(() => {
       Swal.fire({
         title: "Tersimpan!",
         text: "Sukses menambahkan Post",
@@ -79,7 +80,7 @@ const AddBlog = () => {
 
             <Form
               className="p-2"
-              onSubmit={addProductHandler}
+              onSubmit={addPost}
               method="POST"
               encType="multipart/form-data"
             >
@@ -151,16 +152,6 @@ const AddBlog = () => {
                   Isi Konten
                 </Form.Label>
                 <Col sm="10">
-                  {/* <Form.Control
-                    type="text"
-                    as="textarea"
-                    rows={3}
-                    name="nama"
-                    placeholder="Isi konten..."
-                    required
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  /> */}
                   <Editor
                     editorState={description}
                     toolbarClassName="toolbarClassName"

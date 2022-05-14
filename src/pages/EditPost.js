@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Editpost from "./EditBlog";
+import EditPost from "./EditPost1";
 import { Navbar, Sidebar } from "../components";
+import { API_URL } from "../utils/constans";
 
 const Edit = (props) => {
-  window.addEventListener("DOMContentLoaded", (event) => {
+  window.addEventListener("DOMContentLoaded", () => {
     const sidebarToggle = document.body.querySelector("#sidebarToggle");
     if (sidebarToggle) {
       sidebarToggle.addEventListener("click", (event) => {
@@ -16,10 +17,10 @@ const Edit = (props) => {
 
   const [ispostId, setpostId] = useState([]);
 
-  const viewPostId = async (ids) => {
+  const viewPostId = async () => {
     try {
       await axios
-        .post(`http://localhost:2020/getPostId`, {
+        .post(API_URL + `/getPostId`, {
           ids: props.match.params.postID,
         })
         .then((res) => {
@@ -42,12 +43,12 @@ const Edit = (props) => {
       <Sidebar />
       <div className="content-wrapper">
         <Navbar />
-          {ispostId.length > 0 ? (
-            <Editpost
-              postList={ispostId}
-              editPostID={props.match.params.postID}
-            />
-          ) : null}
+        {ispostId.length > 0 ? (
+          <EditPost
+            postList={ispostId}
+            editPostID={props.match.params.postID}
+          />
+        ) : null}
       </div>
     </div>
   );

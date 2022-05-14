@@ -4,9 +4,10 @@ import { useHistory } from "react-router-dom";
 import { Card, Form, Col, Button, Row, Container } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { Navbar, Sidebar } from "../components";
+import { API_URL } from "../utils/constans";
 
 const AddCategories = () => {
-  window.addEventListener("DOMContentLoaded", (event) => {
+  window.addEventListener("DOMContentLoaded", () => {
     const sidebarToggle = document.body.querySelector("#sidebarToggle");
     if (sidebarToggle) {
       sidebarToggle.addEventListener("click", (event) => {
@@ -26,15 +27,13 @@ const AddCategories = () => {
       name: name,
     };
 
-    await axios
-      .post(`http://localhost:2020/api/category/`, category)
-      .then((res) => {
-        Swal.fire({
-          title: "Tersimpan!",
-          text: "Sukses menambahkan Kategori",
-          icon: "success",
-        });
+    await axios.post(API_URL + `/api/category/`, category).then(() => {
+      Swal.fire({
+        title: "Tersimpan!",
+        text: "Sukses menambahkan Kategori",
+        icon: "success",
       });
+    });
     history.push("/Category");
   };
 

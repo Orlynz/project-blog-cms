@@ -6,9 +6,10 @@ import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
 import Swal from "sweetalert2";
 import { Navbar, Sidebar } from "../components";
+import { API_URL } from "../utils/constans";
 
-const Posts = () => {
-  window.addEventListener("DOMContentLoaded", (event) => {
+const Categories = () => {
+  window.addEventListener("DOMContentLoaded", () => {
     const sidebarToggle = document.body.querySelector("#sidebarToggle");
     if (sidebarToggle) {
       sidebarToggle.addEventListener("click", (event) => {
@@ -24,35 +25,34 @@ const Posts = () => {
     }, 1000);
   });
 
-  const [post, setPost] = useState([]);
+  const [category, setCategory] = useState([]);
 
-  const getAllPost = async () => {
-    const posts = await axios.get("http://localhost:2020/api/post/");
-    setPost(posts.data);
+  const getAllCategory = async () => {
+    const category = await axios.get(API_URL + "/api/category/");
+    setCategory(category.data);
   };
 
-  const deletePost = async (id) => {
-    // e.preventDefault();
-    Swal.fire({
-      title: "Apakah anda ingin menghapus Post?",
+  const deleteCategory = async (id) => {
+    await Swal.fire({
+      title: "Apakah anda ingin menghapus Kategori?",
       icon: "warning",
       showDenyButton: true,
       confirmButtonText: "Hapus",
       denyButtonText: `Batal`,
-    }).then(async (result) => {
-      /* Read more about isConfirmed, isDenied below */
+    }).then((result) => {
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:2020/api/post/${id}`);
-        Swal.fire("Terhapus!", "Berhasil menghapus Postingan anda", "success");
+        axios.delete(API_URL + `/api/category/${id}`);
+        Swal.fire("Terhapus!", "Berhasil menghapus Kategori", "success");
       } else if (result.isDenied) {
         Swal.fire("Dibatalkan!", "", "error");
       }
     });
-    getAllPost();
+
+    getAllCategory();
   };
 
   useEffect(() => {
-    getAllPost();
+    getAllCategory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,20 +69,20 @@ const Posts = () => {
               </a>
             </li>
             <li>
-              <i className="fas fa-pencil-alt me-2"></i>Post
+              <i className="fas fa-folder me-2"></i>Category
             </li>
           </ul>
           <Card>
             <Card.Body>
               <Card.Title>
-                <h4 className="float-start">All Post</h4>
+                <h4 className="float-start pt-1">Category</h4>
                 <Button
-                  href="/AddPost"
+                  href="/AddCategory"
                   variant="outline-dark"
-                  type="submit"
                   className="fw-bold float-end"
+                  type="submit"
                 >
-                  <i className="fas fa-plus-circle me-2"></i>ADD POST
+                  <i className="fas fa-plus-circle me-2"></i>ADD CATEGORY
                 </Button>
               </Card.Title>
             </Card.Body>
@@ -93,41 +93,23 @@ const Posts = () => {
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Gambar</th>
-                    <th>Nama</th>
                     <th>Judul</th>
-                    <th>Konten</th>
-                    <th>Aksi</th>
+                    <th>Details</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {post.map((blog, index) => (
-                    <tr key={blog.id}>
+                  {category.map((categories, index) => (
+                    <tr key={categories.id}>
                       <td>{index + 1}</td>
+                      <td>{categories.name}</td>
                       <td>
-                        <img
-                          src={`http://localhost:2020/${blog.image}`}
-                          width="100"
-                          alt=""
-                        />
-                      </td>
-                      <td>{blog.name}</td>
-                      <td>{blog.title}</td>
-                      <td>
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: blog.description.slice(0, 70),
-                          }}
-                        />
-                      </td>
-                      <td>
-                        <a href={`/EditPost/${blog.id}`}>
+                        <a href={`/EditCategory/${categories.id}`}>
                           <i className="fas fa-edit me-2"></i>
                         </a>
                         <i
                           className="fa fa-trash text-danger"
                           aria-hidden="true"
-                          onClick={() => deletePost(blog.id)}
+                          onClick={() => deleteCategory(categories.id)}
                         ></i>
                       </td>
                     </tr>
@@ -141,4 +123,5 @@ const Posts = () => {
     </div>
   );
 };
-export default Posts;
+
+export default Categories;
