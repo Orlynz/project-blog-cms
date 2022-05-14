@@ -112,28 +112,6 @@ const AddBlog = () => {
                   />
                 </Col>
               </Form.Group>
-              {/* <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
-                <Form.Label column sm="2">
-                  Kategori
-                </Form.Label>
-                <Col sm="10">
-                  <Form.Select name="category" required>
-                    <option disabled>Open this select menu</option>
-                    {category.map((categories) => (
-                      <option
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                      >
-                        {categories.name}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Col>
-              </Form.Group> */}
               <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
                   Upload Foto
