@@ -8,11 +8,11 @@ import {
   Comment,
   AddPost,
   AddCategory,
-  EditPost,
   EditCategory,
   Register,
   Login,
 } from "./pages";
+import { EditPost } from "./components";
 import "./assets/css/Main.css";
 
 function App() {

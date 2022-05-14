@@ -4,7 +4,7 @@ import Category from "./Category";
 import Comment from "./Comment";
 import AddPost from "./AddPost";
 import AddCategory from "./AddCategory";
-import EditPost from "./EditPost";
+import Edit from "./EditPost";
 import EditCategory from "./EditCategory";
 import Login from "./Login";
 import Register from "./Register";
@@ -16,7 +16,7 @@ export {
   Comment,
   AddPost,
   AddCategory,
-  EditPost,
+  Edit,
   EditCategory,
   Login,
   Register,
