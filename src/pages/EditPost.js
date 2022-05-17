@@ -14,12 +14,12 @@ import { Card, Form, Col, Button, Row, Container } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { API_URL } from "../utils/constans";
 
-const AddBlog = (props) => {
+const EditPost = (props) => {
   const history = useHistory();
 
   const [userInfo, setuserInfo] = useState({
     title: props.postList[0].title,
-    name: props.postList[0].name,
+    username: props.postList[0].username,
   });
 
   const onChangeValue = (e) => {
@@ -39,19 +39,19 @@ const AddBlog = (props) => {
     setDescription(editorState);
   };
 
-  const PoemAddbooks = async (event) => {
+  const EditPost = async (event) => {
     Swal.fire({
-      title: "Apakah anda ingin menyimpan perubahan?",
+      title: "Do you want to save changes?",
       icon: "question",
       showDenyButton: true,
-      confirmButtonText: "Simpan",
-      denyButtonText: `Batal`,
+      confirmButtonText: "Save",
+      denyButtonText: `Cancel`,
     }).then((result) => {
       if (result.isConfirmed) {
         axios
           .post(API_URL + `/editPost`, {
             title: userInfo.title,
-            name: userInfo.name,
+            username: userInfo.username,
             description: userInfo.description.value,
             ids: props.editPostID,
           })
@@ -60,9 +60,13 @@ const AddBlog = (props) => {
               history.push("/Post");
             }
           });
-        Swal.fire("Tersimpan!", "Postingan anda berhasil diubah.", "success");
+        Swal.fire(
+          "Saved!",
+          "Your post has been modified successfully!",
+          "success"
+        );
       } else if (result.isDenied) {
-        Swal.fire("Perubahan tidak disimpan!", "", "info");
+        Swal.fire("Changes are not saved!", "", "info");
       }
     });
     event.preventDefault();
@@ -88,32 +92,30 @@ const AddBlog = (props) => {
       </ul>
       <Card>
         <Card.Header>
-          <h4>Add Blog</h4>
+          <h4 className="pt-1">Edit Post</h4>
         </Card.Header>
-        <Form className="p-2" onSubmit={PoemAddbooks}>
+        <Form className="p-2" onSubmit={EditPost}>
           <Form.Group as={Row} className="mb-3">
             <Form.Label column sm="2">
-              Nama
+              Name
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 type="text"
-                placeholder="Nama..."
                 required
-                name="name"
-                value={userInfo.name}
+                name="username"
+                value={userInfo.username}
                 onChange={onChangeValue}
               />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3">
             <Form.Label column sm="2">
-              Judul Blog
+              Title
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 type="text"
-                placeholder="Judul Blog..."
                 required
                 name="title"
                 value={userInfo.title}
@@ -121,13 +123,9 @@ const AddBlog = (props) => {
               />
             </Col>
           </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formPlaintextPassword"
-          >
+          <Form.Group as={Row} className="mb-3">
             <Form.Label column sm="2">
-              Isi Konten
+              Description
             </Form.Label>
             <Col sm="10">
               <Editor
@@ -154,7 +152,7 @@ const AddBlog = (props) => {
               className="p-2 float-end fw-bold"
               type="submit"
             >
-              SIMPAN <i className="fa fa-save"></i>
+              SAVE <i className="fa fa-save"></i>
             </Button>
           </Col>
         </Form>
@@ -163,4 +161,4 @@ const AddBlog = (props) => {
   );
 };
 
-export default AddBlog;
+export default EditPost;

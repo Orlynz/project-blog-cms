@@ -34,17 +34,17 @@ const Categories = () => {
 
   const deleteCategory = async (id) => {
     await Swal.fire({
-      title: "Apakah anda ingin menghapus Kategori?",
+      title: "Do you want to delete a Category?",
       icon: "warning",
       showDenyButton: true,
-      confirmButtonText: "Hapus",
-      denyButtonText: `Batal`,
+      confirmButtonText: "Delete",
+      denyButtonText: `Cancel`,
     }).then((result) => {
       if (result.isConfirmed) {
         axios.delete(API_URL + `/api/category/${id}`);
-        Swal.fire("Terhapus!", "Berhasil menghapus Kategori", "success");
+        Swal.fire("Deleted!", "Successfully deleted Category!", "success");
       } else if (result.isDenied) {
-        Swal.fire("Dibatalkan!", "", "error");
+        Swal.fire("Canceled!", "", "error");
       }
     });
 
@@ -53,7 +53,6 @@ const Categories = () => {
 
   useEffect(() => {
     getAllCategory();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -93,8 +92,8 @@ const Categories = () => {
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Judul</th>
-                    <th>Details</th>
+                    <th>Title</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>

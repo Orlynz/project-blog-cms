@@ -28,19 +28,19 @@ const EditCategories = () => {
       name: name,
     };
 
-    Swal.fire({
-      title: "Apakah anda ingin menyimpan perubahan?",
+     Swal.fire({
+      title: "Do you want to save changes?",
       icon: "question",
       showDenyButton: true,
-      confirmButtonText: "Simpan",
-      denyButtonText: `Batal`,
+      confirmButtonText: "Save",
+      denyButtonText: `Cancel`,
     }).then((result) => {
       if (result.isConfirmed) {
         axios.put(API_URL + `/api/category/${id}`, data);
         history.push("/Category");
-        Swal.fire("Tersimpan!", "Kategori berhasil diubah.", "success");
+        Swal.fire("Saved!", "Category changed successfully!", "success");
       } else if (result.isDenied) {
-        Swal.fire("Perubahan tidak disimpan!", "", "info");
+        Swal.fire("Changes are not saved!", "", "info");
       }
     });
   };
@@ -76,29 +76,18 @@ const EditCategories = () => {
             </li>
           </ul>
           <Card className="shadow">
-            <div className="card-header">
-              <h4
-                style={{
-                  float: "left",
-                }}
-              >
-                Edit Kategori
-              </h4>
-            </div>
-
+            <Card.Header>
+              <h4 className="pt-1">Edit Category</h4>
+            </Card.Header>
             <Form className="p-2" onSubmit={updateHandler}>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formPlaintextPassword"
-              >
+              <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
-                  Judul Kategori
+                  Title
                 </Form.Label>
                 <Col sm="10">
                   <Form.Control
                     type="text"
-                    placeholder="Judul Kategori..."
+                    placeholder="Title..."
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -111,7 +100,7 @@ const EditCategories = () => {
                   className="p-2 float-end fw-bold"
                   type="submit"
                 >
-                  SIMPAN <i className="fa fa-save"></i>
+                  SAVE <i className="fa fa-save"></i>
                 </Button>
               </Col>
             </Form>

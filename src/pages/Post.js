@@ -34,17 +34,17 @@ const Posts = () => {
 
   const deletePost = async (id) => {
     await Swal.fire({
-      title: "Apakah anda ingin menghapus Post?",
+      title: "Do you want to delete the Post?",
       icon: "warning",
       showDenyButton: true,
-      confirmButtonText: "Hapus",
-      denyButtonText: `Batal`,
+      confirmButtonText: "Delete",
+      denyButtonText: `Cancel`,
     }).then((result) => {
       if (result.isConfirmed) {
         axios.delete(API_URL + `/api/post/${id}`);
-        Swal.fire("Terhapus!", "Berhasil menghapus Postingan anda", "success");
+        Swal.fire("Deleted!", "Successfully deleted your post!", "success");
       } else if (result.isDenied) {
-        Swal.fire("Dibatalkan!", "", "error");
+        Swal.fire("Canceled!", "", "error");
       }
     });
     getAllPost();
@@ -52,7 +52,6 @@ const Posts = () => {
 
   useEffect(() => {
     getAllPost();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -92,11 +91,11 @@ const Posts = () => {
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Gambar</th>
-                    <th>Nama</th>
-                    <th>Judul</th>
-                    <th>Konten</th>
-                    <th>Aksi</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -110,12 +109,12 @@ const Posts = () => {
                           alt=""
                         />
                       </td>
-                      <td>{blog.name}</td>
+                      <td>{blog.username}</td>
                       <td>{blog.title}</td>
                       <td>
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: blog.description.slice(0, 70),
+                            __html: blog.description.slice(0, 30),
                           }}
                         />
                       </td>

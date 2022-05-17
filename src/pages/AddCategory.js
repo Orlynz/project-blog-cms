@@ -29,8 +29,8 @@ const AddCategories = () => {
 
     await axios.post(API_URL + `/api/category/`, category).then(() => {
       Swal.fire({
-        title: "Tersimpan!",
-        text: "Sukses menambahkan Kategori",
+        title: "Saved!",
+        text: "Successfully added Category!",
         icon: "success",
       });
     });
@@ -51,7 +51,7 @@ const AddCategories = () => {
             </li>
             <li>
               <a href="/Category">
-                <i className="fas fa-folder me-2"></i>Categories
+                <i className="fas fa-folder me-2"></i>Category
               </a>
             </li>
             <li>
@@ -60,17 +60,17 @@ const AddCategories = () => {
           </ul>
           <Card className="shadow">
             <Card.Header>
-              <h4>Add Category</h4>
+              <h4 className="pt-1">Add Category</h4>
             </Card.Header>
             <Form className="p-2" onSubmit={addCategory}>
               <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
-                  Judul
+                  Title
                 </Form.Label>
                 <Col sm="10">
                   <Form.Control
                     type="text"
-                    placeholder="Judul..."
+                    placeholder="Title..."
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -83,7 +83,7 @@ const AddCategories = () => {
                   className="p-2 float-end fw-bold"
                   type="submit"
                 >
-                  SIMPAN <i className="fa fa-save"></i>
+                  SAVE <i className="fa fa-save"></i>
                 </Button>
               </Col>
             </Form>

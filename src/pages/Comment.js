@@ -34,17 +34,17 @@ const Comments = () => {
 
   const deleteComment = async (id) => {
     await Swal.fire({
-      title: "Apakah anda ingin menghapus komentar?",
+      title: "Do you want to delete Comment?",
       icon: "warning",
       showDenyButton: true,
-      confirmButtonText: "Hapus",
-      denyButtonText: `Batal`,
+      confirmButtonText: "Delete",
+      denyButtonText: `Cencel`,
     }).then((result) => {
       if (result.isConfirmed) {
         axios.delete(API_URL + `/api/comment/${id}`);
-        Swal.fire("Terhapus!", "Berhasil menghapus komentar", "success");
+        Swal.fire("Deleted!", "Successfully deleted Comment!", "success");
       } else if (result.isDenied) {
-        Swal.fire("Dibatalkan!", "", "error");
+        Swal.fire("Cancelled!", "", "error");
       }
     });
     getAllComment();
@@ -52,7 +52,6 @@ const Comments = () => {
 
   useEffect(() => {
     getAllComment();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -81,10 +80,10 @@ const Comments = () => {
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Nama</th>
+                    <th>Name</th>
                     <th>Post</th>
-                    <th>Comments</th>
-                    <th>Aksi</th>
+                    <th>Comment</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 {comment.map((blog, index) => (

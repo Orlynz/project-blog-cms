@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Card, Form, Col, Button, Row, Container } from "react-bootstrap";
@@ -28,8 +28,10 @@ const AddBlog = () => {
   };
   const [userInfo] = useState({});
   const [title, setTitle] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [image, setImage] = useState("");
+  const [category_Id, setCategory_Id] = useState([]);
+  const [selectCategory, setSelectCategory] = useState("");
   const history = useHistory();
 
   const addPost = async (e) => {
@@ -39,18 +41,28 @@ const AddBlog = () => {
 
     formData.append("image", image);
     formData.append("title", title);
-    formData.append("name", name);
+    formData.append("username", username);
+    formData.append("category_id", selectCategory);
     formData.append("description", userInfo.description.value);
 
     await axios.post(API_URL + `/api/post/`, formData).then(() => {
       Swal.fire({
-        title: "Tersimpan!",
-        text: "Sukses menambahkan Post",
+        title: "Saved!",
+        text: "Success adding Post!",
         icon: "success",
       });
     });
     history.push("/Post");
   };
+
+  const getAllCategory = async () => {
+    const category = await axios.get(API_URL + "/api/category/");
+    setCategory_Id(category.data);
+  };
+
+  useEffect(() => {
+    getAllCategory();
+  }, []);
 
   return (
     <div className="d-flex wrapper">
@@ -66,7 +78,7 @@ const AddBlog = () => {
             </li>
             <li>
               <a href="/Post">
-                <i className="fas fa-pencil-alt me-2"></i>Posts
+                <i className="fas fa-pencil-alt me-2"></i>Post
               </a>
             </li>
             <li>
@@ -75,7 +87,7 @@ const AddBlog = () => {
           </ul>
           <Card>
             <Card.Header>
-              <h4>Add Blog</h4>
+              <h4 className="pt-1">Add Post</h4>
             </Card.Header>
 
             <Form
@@ -86,26 +98,26 @@ const AddBlog = () => {
             >
               <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
-                  Nama
+                  Name
                 </Form.Label>
                 <Col sm="10">
                   <Form.Control
                     type="text"
-                    placeholder="Nama..."
+                    placeholder="Name..."
                     required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                 </Col>
               </Form.Group>
               <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
-                  Judul Blog
+                  Title
                 </Form.Label>
                 <Col sm="10">
                   <Form.Control
                     type="text"
-                    placeholder="Judul Blog..."
+                    placeholder="Title..."
                     required
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -114,7 +126,7 @@ const AddBlog = () => {
               </Form.Group>
               <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
-                  Upload Foto
+                  Image
                 </Form.Label>
                 <Col sm="10">
                   <Form.Control
@@ -127,10 +139,33 @@ const AddBlog = () => {
               </Form.Group>
               <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="2">
-                  Isi Konten
+                  Category
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Select
+                    name="category"
+                    value={selectCategory}
+                    onChange={(e) => {
+                      setSelectCategory(e.target.value.toString());
+                    }}
+                    required
+                  >
+                    <option disabled>Select Category</option>
+                    {category_Id.map((pot, index) => (
+                      <option value={pot.id} key={index}>
+                        {pot.name}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3">
+                <Form.Label column sm="2">
+                  Description
                 </Form.Label>
                 <Col sm="10">
                   <Editor
+                    placeholder="Description..."
                     editorState={description}
                     toolbarClassName="toolbarClassName"
                     wrapperClassName="wrapperClassName"
@@ -154,7 +189,7 @@ const AddBlog = () => {
                   className="p-2 float-end fw-bold"
                   type="submit"
                 >
-                  SIMPAN <i className="fa fa-save"></i>
+                  SAVE <i className="fa fa-save"></i>
                 </Button>
               </Col>
             </Form>

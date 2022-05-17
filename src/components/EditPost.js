@@ -17,26 +17,25 @@ const EditPost = (props) => {
 
   const [ispostId, setpostId] = useState([]);
 
-  const viewPostId = async () => {
-    try {
-      await axios
-        .post(API_URL + `/getPostId`, {
-          ids: props.match.params.postID,
-        })
-        .then((res) => {
-          if (res.data.success === true) {
-            setpostId(res.data.listId);
-          }
-        });
-    } catch (error) {
-      throw error;
-    }
-  };
-
   useEffect(() => {
+    const viewPostId = async () => {
+      try {
+        await axios
+          .post(API_URL + `/getPostId`, {
+            ids: props.match.params.postID,
+          })
+          .then((res) => {
+            if (res.data.success === true) {
+              setpostId(res.data.listId);
+            }
+          });
+      } catch (error) {
+        throw error;
+      }
+    };
+
     viewPostId(props.match.params.postID);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.match.params.postID]);
 
   return (
     <div className="d-flex wrapper">

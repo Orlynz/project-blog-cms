@@ -8,10 +8,10 @@ body {
     rgb(255, 203, 107)
   );
 }
-.jingga {
+.orange {
   color: orange;
 }
-.merah {
+.red {
   color: red;
 }
 
@@ -101,16 +101,6 @@ body.sidebar-toggle .wrapper .sidebar {
   text-transform: capitalize;
   font-size: 0.875rem;
   font-weight: 500;
-}
-.table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-}
-.dropdown-toggle::after {
-  display: none;
 }
 a {
   text-decoration: none;
