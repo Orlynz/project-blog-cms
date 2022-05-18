@@ -23,7 +23,7 @@ const Login = () => {
     };
 
     try {
-      await axios.post(API_URL+"/api/users/register", data);
+      await axios.post(API_URL + "/api/users/register", data);
       history.push("/");
     } catch (error) {
       if (error.response) {

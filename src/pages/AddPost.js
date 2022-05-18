@@ -30,7 +30,7 @@ const AddBlog = () => {
   const [title, setTitle] = useState("");
   const [username, setUsername] = useState("");
   const [image, setImage] = useState("");
-  const [category_Id, setCategory_Id] = useState([]);
+  const [category_id, setCategory_id] = useState([]);
   const [selectCategory, setSelectCategory] = useState("");
   const history = useHistory();
 
@@ -57,7 +57,7 @@ const AddBlog = () => {
 
   const getAllCategory = async () => {
     const category = await axios.get(API_URL + "/api/category/");
-    setCategory_Id(category.data);
+    setCategory_id(category.data);
   };
 
   useEffect(() => {
@@ -151,7 +151,7 @@ const AddBlog = () => {
                     required
                   >
                     <option disabled>Select Category</option>
-                    {category_Id.map((pot, index) => (
+                    {category_id.map((pot, index) => (
                       <option value={pot.id} key={index}>
                         {pot.name}
                       </option>
